@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ViewMacros</title>
+    <link rel="stylesheet" href="static/styles.css">
+<!--    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">-->
+    <script src="{{ url_for('static', filename='28adb9f300.js') }}" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="sidebar">
+
+        <h2>Automation Tools</h2>
+        <div class="logo_wrap">
+				<a href="#">
+					<img src="static/TTD_BIG.png" alt="logo"></a>
+        </div>
+        <ul>
+             <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
+            <li><a href="#"><i class="fa-solid fa-list-ol"></i>Campaign ID</a></li>
+            <li><a href="/CampaignName"><i class="fas fa-address-card"></i>Campaign Name</a></li>
+            <li><a href="/chooseFile"><i class="fa-solid fa-image"></i>Creative File</a></li>
+<!--            <li><a href="#"><i class="fas fa-address-book"></i>Contact</a></li>-->
+            <!--<li><a href="CreativeSetting"><i class="fa-solid fa-scale-balanced"></i>Rules</a></li>-->
+            <li><a href="/viewMacros"><i class="fa-sharp fa-solid fa-eye"></i>View All Macros</a></li>
+            <!--<li><a href="#"><i class="fa-sharp fa-solid fa-file-export"></i>Output</a></li>-->
+        </ul>
+    </div>
+    <div class="main_content">
+        <div class="header">Welcome to Tracking Creation Tools.</div>
+        <div class="info">
+            <table class="content-table">
+                <thead>
+                <tr>
+                    <td>Object</td>
+                    <td>macro_key</td>
+                    <td>macro_value</td>
+                    <td>description</td>
+                </tr>
+                {% for k, v in macros.items() %}
+                <tbody>
+                <tr>
+                    <td>{{ k }}</td>
+                    <td>{{ v["key"] }}</td>
+                    <td>{{ v["value"] }}</td>
+                    <td>{{ v["desc"] }}</td>
+                </tr>
+                {% endfor %}
+<!--                <tr>-->
+<!--                    <td>TTD AdGroupID</td>-->
+<!--                    <td>%%AdGroupID%%</td>-->
+<!--                    <td></td>-->
+<!--                </tr>-->
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

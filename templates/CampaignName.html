@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CampaignNameSetting</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <script src="{{ url_for('static', filename='28adb9f300.js') }}" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="sidebar">
+
+        <h2>Automation Tools</h2>
+        <div class="logo_wrap">
+				<a href="#">
+					<img src="static/TTD_BIG.png" alt="logo"></a>
+        </div>
+        <ul>
+             <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
+            <li><a href="#"><i class="fa-solid fa-list-ol"></i>Campaign ID</a></li>
+            <li><a href="/CampaignName"><i class="fas fa-address-card"></i>Campaign Name</a></li>
+            <li><a href="/chooseFile"><i class="fa-solid fa-image"></i>Creative File</a></li>
+            <!--<li><a href="CreativeSetting"><i class="fa-solid fa-scale-balanced"></i>Rules</a></li>-->
+            <li><a href="/viewMacros"><i class="fa-sharp fa-solid fa-eye"></i>View All Macros</a></li>
+            <!--<li><a href="#"><i class="fa-sharp fa-solid fa-file-export"></i>Output</a></li>-->
+        </ul>
+    </div>
+    <div class="main_content">
+        <div class="header">Welcome to Tracking Creation Assistant.</div>
+        <div class="info">
+            <form method="post" action="/CampaignNameSetting">
+                <table>
+                    <tr>
+                        <td>Name:</td>
+                        <td><input type="text" name="campaign_name" value="{{campaign_name_macro['value']}}"></td>
+                    </tr>
+                    <tr>
+                        <td>CampaignMacro:</td>
+                        <td><input type="text" name="campaign_macro_key" value="{{campaign_name_macro['key']}}" disabled></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input type="submit" value="SUBMIT"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RTBAsia Tools</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <!--    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">-->
+    <script src="{{ url_for('static', filename='28adb9f300.js') }}" crossorigin="anonymous"></script>
+</head>
+<body>
+<!--<table>-->
+<!--    <tr>-->
+<!--        <td>Campaign Name Setting:</td>-->
+<!--        <td><a href="/CampaignName" target="_blank">Setting</a></td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td>Creative Setting:</td>-->
+<!--        <td><a href="/CreativeSetting(HostedType-Display)" target="_blank">HostedType-Display</a></td>-->
+<!--        <td><a target="_blank">Others(Planning)</a></td>-->
+<!--    </tr>-->
+<!--</table>-->
+<!--<p>-->
+<!--<table>-->
+<!--    <tr>-->
+<!--        <td>All Macros</td>-->
+<!--        <td><a href="/viewMacros" target="_blank">View</a></td>-->
+<!--    </tr>-->
+<!--</table>-->
+
+
+
+<div class="wrapper">
+    <div class="sidebar">
+
+        <h2>Automation Tools</h2>
+        <div class="logo_wrap">
+				<a href="#">
+					<img src="static/TTD_BIG.png" alt="logo"></a>
+        </div>
+        <ul>
+            <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
+            <li><a href="/"><i class="fa-solid fa-list-ol"></i>Campaign ID</a></li>
+            <li><a href="/CampaignName"><i class="fas fa-address-card"></i>Campaign Name</a></li>
+            <li><a href="/chooseFile"><i class="fa-solid fa-image"></i>Creative File</a></li>
+            <!--<li><a href="CreativeSetting"><i class="fa-solid fa-scale-balanced"></i>Rules</a></li>-->
+            <li><a href="/viewMacros"><i class="fa-sharp fa-solid fa-eye"></i>View All Macros</a></li>
+            <!--<li><a href="#"><i class="fa-sharp fa-solid fa-file-export"></i>Output</a></li>-->
+        </ul>
+    </div>
+    <div class="main_content">
+        <div class="header">Welcome to Tracking Creation Assistant.</div>
+        <div class="info">
+            <div>Instruction:</div>
+            <div>Campaign ID: Look up campaign name by campaign ID in TTD API.</div>
+            <div>Campaign Name: Set up Campaign name and its macro</div>
+            <div>Creative File: Choose creative files to upload,
+                set naming convention and rules for the chosen files, get "Name",
+                "landing page URl", "Click through URL" for creative upload file.
+                Get a preview of the output file.</div>
+            <div>View All Macros: view all macro values that has already been saved so far.
+                (e.g. campaign_name, size, TTD AdgroupID, TTD CampaignID )</div>
+      </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table style="width:100%">
+        <tr><td align="center">name_rule</td><td align="center">creative files</td><td>clickthrough_url</td><td>landing_url</td></tr>
+        {% for rule in creative_rules %}
+            <tr>
+                <td>{{rule["name"]}}</td>
+                <td>
+                    {% for f in rule["creative_files"] %}
+                    {{f}}<br>
+                    {% endfor %}
+                </td>
+                <td>{{rule["clickthrough_url"]}}</td>
+                <td>{{rule["landing_page_url"]}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="/output" target="_blank">Download Results</a>
+</body>
+</html>
