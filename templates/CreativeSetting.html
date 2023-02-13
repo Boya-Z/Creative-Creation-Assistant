@@ -28,6 +28,16 @@
             });
             files.value = files_string
             $('#rule_setting_form').submit()
+
+            function highlightSize(s) {
+              var targetSpan = $("span:contains('" + s + "')");
+              var spanText = targetSpan.text()
+
+              targetSpan.html(spanText.replace(s, "<mark>" + s + "</mark>"));
+            }
+
+            highlightSize('250x250');
+
         }
     </script>
 </head>
@@ -83,7 +93,13 @@
                     <tr>
                         <td><input type="checkbox" name="creative_files[]" id="creative_files" value="{{f[0]}}" checked ='checked'></td>
                         <td>{{f[0]}}</td>
+                        {% if (f[1] =='160' and f[2]=='600')  %}
                         <td>{{f[1]}}x{{f[2]}}</td>
+                        {% else %}
+                        <td><mark>{{f[1]}}x{{f[2]}}</mark></td>
+                        {% endif %}
+<!--                         320X480 728X90 970X250-->
+<!--300X250 300X600 320X50-->
                     </tr>
                     {% endfor %}
                 </table>

@@ -2,10 +2,12 @@ import flask
 from flask import Flask, render_template, request
 from datetime import timedelta
 import requests, json, socket
-import os
+import os, stat
 import static.Creative_Class as classCreative
 import static.Result_Class as classResult
 
+import win32com.client as win32
+import pythoncom
 
 app = Flask(__name__, template_folder='templates', static_folder='static' )
 app.add_template_filter( enumerate )
@@ -102,10 +104,13 @@ def exportXlsx():
 
     resultObj = classResult.Result()
     resultObj.generate_results( creative_rules=creative_rules, macros=classCreative.Creative.macros, creative_path=creative_upload_path )
-    result_file_name = resultObj.export_to_excel( path=os.path.abspath( "./export" ), name="result.xlsx" )
+    result_file_name = resultObj.export_to_excel( path=os.path.abspath( "./export" ), name="Result_v28.xlsx" )
     basedir = os.path.abspath( os.path.dirname(__file__) )
     file_path = os.path.join( basedir, "export", result_file_name )
+
+    os.chmod(file_path, stat.S_IWRITE)
     return flask.send_file(file_path)
+
 
 
 if __name__ == '__main__':

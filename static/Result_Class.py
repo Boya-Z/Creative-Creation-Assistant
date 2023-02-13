@@ -70,30 +70,44 @@ class Result():
     def export_to_excel( self, path, name ):
         import openpyxl
         from openpyxl.utils import get_column_letter
-        workbook = openpyxl.Workbook()
-        sheet = workbook.active
-        sheet.title = "Hosted Display"
-        data_title = ["Name (required)","Description", "Asset File Name (required)", "Clickthrough URL (required)", "Landing Page URL (required)", "Ad Server", "Creative Placement ID", "Third Party Tracking Tag 1", "Third Party Tracking Tag 2", "Third Party Tracking Tag 3", "Third Party Tracking URL 1", "Third Party Tracking URL 2", "Third Party Tracking URL 3", "Yahoo Offer Type", "Flight Start Date", "Flight End Date", "Flight Time Zone ID", "Political Candidate", "Mini Program Id", "Mini Program Path" ]
-        col=1
-        for t in data_title:
-            c = sheet.cell( row=1, column=col, value=t )
-            collen = len( str(t).encode() )
-            c.font = openpyxl.styles.Font( bold=True )
-            letter = get_column_letter( col )
-            sheet.column_dimensions[letter].width = collen * 1.2
-            col += 1
+        workbook = openpyxl.load_workbook('./BulkCreativeImportTemplate.v28.xlsx')
 
+        sheet = workbook.get_sheet_by_name('Hosted Display')
         # 写入正式数据
-        for l_index, line in enumerate( self.results_list ):
+        for l_index, line in enumerate(self.results_list):
             col = 1
-            for col_index, e in enumerate( line ):
-                sheet.cell( row=2+l_index, column=col+col_index , value=e )
+            for col_index, e in enumerate(line):
+                sheet.cell(row=2 + l_index, column=col + col_index, value=e)
         result_file = name
 
-        # 所有行自适应
+
+        workbook.save( "{}/{}".format( path, result_file ))
 
 
-        workbook.save( "{}/{}".format( path, result_file ) )
+        # workbook = openpyxl.Workbook()
+        # sheet = workbook.active
+        # sheet.title = "Hosted Display"
+        # data_title = ["Name (required)","Description", "Asset File Name (required)", "Clickthrough URL (required)", "Landing Page URL (required)", "Ad Server", "Creative Placement ID", "Third Party Tracking Tag 1", "Third Party Tracking Tag 2", "Third Party Tracking Tag 3", "Third Party Tracking URL 1", "Third Party Tracking URL 2", "Third Party Tracking URL 3", "Yahoo Offer Type", "Flight Start Date", "Flight End Date", "Flight Time Zone ID", "Political Candidate", "Mini Program Id", "Mini Program Path" ]
+        # col=1
+        # for t in data_title:
+        #     c = sheet.cell( row=1, column=col, value=t )
+        #     collen = len( str(t).encode() )
+        #     c.font = openpyxl.styles.Font( bold=True )
+        #     letter = get_column_letter( col )
+        #     sheet.column_dimensions[letter].width = collen * 1.2
+        #     col += 1
+        #
+        # # 写入正式数据
+        # for l_index, line in enumerate( self.results_list ):
+        #     col = 1
+        #     for col_index, e in enumerate( line ):
+        #         sheet.cell( row=2+l_index, column=col+col_index , value=e )
+        # result_file = name
+        #
+        # # 所有行自适应
+        #
+        #
+        # workbook.save( "{}/{}".format( path, result_file ) )
         return result_file
 
 
