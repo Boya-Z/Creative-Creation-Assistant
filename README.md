@@ -7,6 +7,7 @@ Account managers would need to bulk import creatives by filling out the template
 
 This manual typing process is often complex, involves too many "copy and paste" commands, and can take hours if many creative files and long website URLs are involved.
 
+
 help                 💬 This help message
 lint                 🔎 Lint & format, will not fix but sets exit code on error
 lint-fix             📜 Lint & format, will try to fix errors and modify code
