@@ -8,11 +8,11 @@
     <script src="{{ url_for('static', filename='28adb9f300.js') }}" crossorigin="anonymous"></script>
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript" >
-        function setRATrackURL()
-        {
-            e = document.getElementById('clickthrough_rule')
-            e.value='https://trace.rtbasia.com/tkp?rta_k=fCKmfCn4oj&utm_campaign=##cpn##&utm_source=TTD&utm_content=%%AdGroupID%%_##size##&utm_medium=%%Media%%&device=Mobile&imei=__IMEI__&mac=__MAC__&mac1=__MAC1__&idfa=__IDFA__&androidid=__ANDROIDID__&oaid=__OAID__&uid=%%TDID%%&custid1=__CUSTID1__&custid2=__CUSTID2__&os=__OS__&ua=__UA__&ts=__TS__&clientip=%%IP%%&caid=__CAID__'
-        }
+<!--        function setRATrackURL()-->
+<!--        {-->
+<!--            e = document.getElementById('clickthrough_rule')-->
+<!--            e.value='https://trace.rtbasia.com/tkp?rta_k=fCKmfCn4oj&utm_campaign=##cpn##&utm_source=TTD&utm_content=%%AdGroupID%%_##size##&utm_medium=%%Media%%&device=Mobile&imei=__IMEI__&mac=__MAC__&mac1=__MAC1__&idfa=__IDFA__&androidid=__ANDROIDID__&oaid=__OAID__&uid=%%TDID%%&custid1=__CUSTID1__&custid2=__CUSTID2__&os=__OS__&ua=__UA__&ts=__TS__&clientip=%%IP%%&caid=__CAID__'-->
+<!--        }-->
         function combine_checkboxes(){
             var files = document.getElementById( "files" )
             var files_string = ""
@@ -88,18 +88,14 @@
             <form method="post" id="rule_setting_form" action="/add_rules" target="submitted">
                 <p>Choose Creative Files:</p>
                 <table style="width:40%">
-                    <tr><td></td><td>file_name</td><td>size</td></tr>
+                    <tr><td></td><td>file_name</td><td>size</td><td>extension</td><td>mime</td></tr>
                     {% for f in file_list %}
                     <tr>
                         <td><input type="checkbox" name="creative_files[]" id="creative_files" value="{{f[0]}}" checked ='checked'></td>
                         <td>{{f[0]}}</td>
-                        {% if (f[1] =='160' and f[2]=='600')  %}
                         <td>{{f[1]}}x{{f[2]}}</td>
-                        {% else %}
-                        <td><mark>{{f[1]}}x{{f[2]}}</mark></td>
-                        {% endif %}
-<!--                         320X480 728X90 970X250-->
-<!--300X250 300X600 320X50-->
+                        <td>{{f[3]}}</td>
+                        <td>{{f[4]}}</td>
                     </tr>
                     {% endfor %}
                 </table>
@@ -108,6 +104,14 @@
                     <tr>
                         <td style="padding: 10px 0 10px">Creative_Name:</td>
                         <td><input type="text" name="creative_name_rule" style="width:180px" value="##cpn##"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px 0 10px">Description:</td>
+                        <td><input type="text" name="Description_rule" style="width:180px" value="##cpn##_##CreativeFileName##"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px 0 10px">Asset File Name(if you don't change, the same as file name):</td>
+                        <td><input type="text" name="Asset_File_Name_rule" style="width:180px" value="##CreativeFileName##"></td>
                     </tr>
                     <tr>
                         <td style="padding: 10px 0 10px">Clickthrough_url:</td>

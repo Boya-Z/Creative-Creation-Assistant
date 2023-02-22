@@ -2,7 +2,7 @@ import flask
 from flask import Flask, render_template, request
 from datetime import timedelta
 import requests, json, socket
-import os, stat
+import os, stat, filetype
 import static.Creative_Class as classCreative
 import static.Result_Class as classResult
 
@@ -60,9 +60,12 @@ def fileupload():
         # 存储文件size
         upload_file.save( upload_path )
         size = Image.open(upload_path).size
+        kind = filetype.guess(upload_path)
         temp.append( upload_file.filename )
         temp.append( size[0] )
         temp.append( size[1] )
+        temp.append(kind.extension)
+        temp.append(kind.mime)
         file_list.append( temp )
     return render_template('CreativeSetting.html', file_list=file_list, macros=classCreative.Creative.macros )
 
@@ -76,6 +79,8 @@ def add_rules():
                 {
                     "creative_files": request.form.get( 'files' ).split(","),
                     "name": request.form.get('creative_name_rule'),
+                    "Description": request.form.get('Description_rule'),
+                    "Asset_File_Name": request.form.get('Asset_File_Name_rule'),
                     "clickthrough_url": request.form.get('clickthrough_rule'),
                     "landing_page_url": request.form.get('landing_page_rule')
                 }
@@ -98,6 +103,14 @@ def exportXlsx():
             "creative_files": ["1 (1).png", "1 (2).png", "1 (3).png"],
             "clickthrough_url": "https://www.bybit.com/zh-TW/register?regEmail&medium=paid_displayp&source=TTD&channel=paid_&campaign=HK_##cpn##&term=All_##size##&content=V2_Rewards_Hub&dtpid=1634637232805",
             "landing_page_url": "https://www.bybit.com/"
+        },
+        {
+            "creative_files": ["1 (1).png", "1 (2).png", "1 (3).png"],
+            name：  Control_20230213_##creativeFileName##  （第一组）
+            Description:  Ecoflow 2023 Control
+            Asset File Name:  Control_20230213_##creativeFileName##   (不输入则不需要重命名，保留图片后缀)
+            ClickUL:  https://us.ecoflow.com/?utm_source=tzjs&utm_medium=display&utm_campaign=controlled
+            landing：  https://us.ecoflow.com/
         }
     ]
     '''
@@ -108,7 +121,7 @@ def exportXlsx():
     basedir = os.path.abspath( os.path.dirname(__file__) )
     file_path = os.path.join( basedir, "export", result_file_name )
 
-    os.chmod(file_path, stat.S_IWRITE)
+    # os.chmod(file_path, stat.S_IWRITE)
     return flask.send_file(file_path)
 
 

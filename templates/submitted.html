@@ -6,13 +6,14 @@
 </head>
 <body>
     <table style="width:100%">
-        <tr><td align="center">name_rule</td><td align="center">creative files</td><td>clickthrough_url</td><td>landing_url</td></tr>
+        <tr><td align="center">name_rule</td><td align="center">Description_rule</td><td align="center">Asset_File_Name_rule</td><td>clickthrough_url</td><td>landing_url</td></tr>
         {% for rule in creative_rules %}
             <tr>
                 <td>{{rule["name"]}}</td>
+                <td>{{rule["Description"]}}</td>
                 <td>
                     {% for f in rule["creative_files"] %}
-                    {{f}}<br>
+                    {{f}} (original name,might be changed in excel)
                     {% endfor %}
                 </td>
                 <td>{{rule["clickthrough_url"]}}</td>
