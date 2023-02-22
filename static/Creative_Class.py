@@ -6,13 +6,19 @@ class Creative():
             "value": "default_campaign_name",
             "dynamic": False
         },
-        "size":{
-            "desc": "Creative Size",
-            "key": "##size##",
-            "value": "",
+        "creative_file_name":{
+            "desc": "the Original Name of Creative File",
+            "key": "##CreativeFileName##",
+            "value": "*depend on uploaded creative files",
             "dynamic": True
         },
-        "TTD AdgroupID":{
+        "size": {
+            "desc": "Creative Size",
+            "key": "##size##",
+            "value": "*depend on uploaded creative files",
+            "dynamic": True
+        },
+        "TTD AdgroupID": {
             "desc": "Macro in TTD",
             "key": "%%AdGroupID%%",
             "value": "",
@@ -38,4 +44,17 @@ class Creative():
         from PIL import Image
         im = Image.open( file )
         return im.size
+
+    def get_file_name(self, filepath ):
+        import os
+        from pathlib import Path
+        # name = os.path.basename(filepath)
+        name = Path(filepath).stem
+        return name
+
+    def get_file_full_name(self, filepath ):
+        from pathlib import Path
+        name= Path(filepath).stem
+        fullname=Path(filepath).name
+
 
