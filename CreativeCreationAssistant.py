@@ -1,8 +1,10 @@
+from zipfile import ZIP_DEFLATED
+
 import flask
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response
 from datetime import timedelta
 import requests, json, socket
-import os, stat, filetype
+import os, stat, filetype, zipfile
 import static.Creative_Class as classCreative
 import static.Result_Class as classResult
 
@@ -124,7 +126,37 @@ def exportXlsx():
     # os.chmod(file_path, stat.S_IWRITE)
     return flask.send_file(file_path)
 
+@app.route( '/empty' )
+def empty():
+    # clean creative_rules list
+    creative_rules.clear()
+    # 清空 export folder
+    import os
+    directory = os.path.abspath( "./export" )
+    for f in os.listdir(directory):
+        os.remove(os.path.join(directory, f))
 
+    return render_template('chooseFile.html')
+
+@app.route('/download_zip')
+def download():
+    from flask import send_file
+    from glob import glob
+    from io import BytesIO
+    from zipfile import ZipFile
+
+    stream = BytesIO()
+    with ZipFile(stream, 'w') as zf:
+        for root, subdirs, files in os.walk("./export" ):
+            for filename in files:
+                zf.write(os.path.join(root, filename))
+    stream.seek(0)
+
+    return send_file(
+        stream,
+        as_attachment=True,
+        download_name='rename_creatives.zip'
+    )
 
 if __name__ == '__main__':
     app.run( host='0.0.0.0', port='27804' )
