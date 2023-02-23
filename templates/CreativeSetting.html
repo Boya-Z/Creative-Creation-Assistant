@@ -17,7 +17,8 @@
             var files = document.getElementById( "files" )
             var files_string = ""
             $('input:checkbox').each(function() {
-                if( $(this).attr('checked') ) {
+                if( $(this).is(':checked') ) {
+
                     if ( files_string.length == 0 ) {
                         files_string = $(this).val()
                     }
