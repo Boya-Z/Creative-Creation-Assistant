@@ -140,6 +140,7 @@ def empty():
 
 @app.route('/download_zip')
 def download():
+    exportXlsx()
     from flask import send_file
     from glob import glob
     from io import BytesIO
