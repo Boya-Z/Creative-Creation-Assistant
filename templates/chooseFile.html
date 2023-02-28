@@ -65,7 +65,7 @@
             <p>Click on the "Choose File" button to upload a file:</p>
             <form method="post" action="/fileUpload" enctype="multipart/form-data">
                 <input type="file" id="myFile" name="files" multiple="multiple"  onchange="updateList()" accept="image/*" >
-                <input type="submit" value='Save' />
+
                 <!-- <input type="submit" value='Save' onclick="return validateForm()"/> -->
                 <div></div>
                 <p></p>
@@ -74,7 +74,9 @@
                 </a>
                 <p>Selected files:</p>
                 <div id="fileList"></div>
+                <input type="submit" value='Upload'>
             </form>
+
         </div>
     </div>
 </div>

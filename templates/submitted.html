@@ -11,11 +11,14 @@
             <tr>
                 <td>{{rule["name"]}}</td>
                 <td>{{rule["Description"]}}</td>
+                <!--
                 <td>
                     {% for f in rule["creative_files"] %}
                     {{f}} (original name,might be changed in excel)
                     {% endfor %}
                 </td>
+                -->
+                <td>{{rule["Asset_File_Name"]}}</td>
                 <td>{{rule["clickthrough_url"]}}</td>
                 <td>{{rule["landing_page_url"]}}</td>
             </tr>

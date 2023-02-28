@@ -106,7 +106,7 @@
 
                 <table  style="width:40%">
                     <tr>
-                        <td style="padding: 10px 0 10px">Creative_Name:<br><input type="text" name="creative_name_rule" style="width:180px" value="##cpn##"></td>
+                        <td style="padding: 10px 0 10px">Name:<br><input type="text" name="creative_name_rule" style="width:180px" value="##cpn##"></td>
                     </tr>
                     <tr>
                         <td style="padding: 10px 0 10px">Description:<br>
@@ -125,7 +125,10 @@
                         <input type="text" name="landing_page_rule" style="width:100%"  value="http://www.client.com/"></td>
                     </tr>
                     <tr>
-                        <td colspan="2" style="padding: 10px 0 10px"><input type="button" value="Add Settings" onclick="combine_checkboxes()"></td>
+                        <td colspan="2" style="padding: 10px 0 10px">
+                            <input type="hidden" value="{{cn}}">
+                            <input type="button" value="Add Settings" onclick="combine_checkboxes()">
+                        </td>
                     </tr>
                 </table>
                 <input type="hidden" name="files" id="files" value="">
