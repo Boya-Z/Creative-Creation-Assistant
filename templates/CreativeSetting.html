@@ -11,13 +11,14 @@
 <!--        function setRATrackURL()-->
 <!--        {-->
 <!--            e = document.getElementById('clickthrough_rule')-->
-<!--            e.value='https://trace.rtbasia.com/tkp?rta_k=fCKmfCn4oj&utm_campaign=##cpn##&utm_source=TTD&utm_content=%%AdGroupID%%_##size##&utm_medium=%%Media%%&device=Mobile&imei=__IMEI__&mac=__MAC__&mac1=__MAC1__&idfa=__IDFA__&androidid=__ANDROIDID__&oaid=__OAID__&uid=%%TDID%%&custid1=__CUSTID1__&custid2=__CUSTID2__&os=__OS__&ua=__UA__&ts=__TS__&clientip=%%IP%%&caid=__CAID__'-->
+<!--            e.value='https://trace.rtbasia.com/tkp?rta_k=fCKmfCn4oj&utm_campaign=##cpn##&utm_source=TTD&utm_content=%%AdGroupID%%_##cs##&utm_medium=%%Media%%&device=Mobile&imei=__IMEI__&mac=__MAC__&mac1=__MAC1__&idfa=__IDFA__&androidid=__ANDROIDID__&oaid=__OAID__&uid=%%TDID%%&custid1=__CUSTID1__&custid2=__CUSTID2__&os=__OS__&ua=__UA__&ts=__TS__&clientip=%%IP%%&caid=__CAID__'-->
 <!--        }-->
         function combine_checkboxes(){
             var files = document.getElementById( "files" )
             var files_string = ""
             $('input:checkbox').each(function() {
-                if( $(this).attr('checked') ) {
+                if( $(this).is(':checked') ) {
+
                     if ( files_string.length == 0 ) {
                         files_string = $(this).val()
                     }
@@ -51,7 +52,7 @@
 					<img src="static/TTD_BIG.png" alt="logo"></a>
         </div>
         <ul>
-             <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
+            <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
             <li><a href="#"><i class="fa-solid fa-list-ol"></i>Campaign ID</a></li>
             <li><a href="/CampaignName"><i class="fas fa-address-card"></i>Campaign Name</a></li>
             <li><a href="/chooseFile"><i class="fa-solid fa-image"></i>Creative File</a></li>
@@ -64,7 +65,7 @@
     <div class="main_content">
         <div class="header">Welcome to Tracking Creation Assistant.</div>
         <div class="info">
-            <div style="position:absolute; left:55%">
+            <div style="position:absolute; left:47%">
             <p>Macro Dictionary:</p>
                 <table class="content-table">
                 <thead>
@@ -83,10 +84,12 @@
                     <td>{{ v["desc"] }}</td>
                 </tr>
                 {% endfor %}
-            </table>
+            </table><br>
+            <a href="https://atlassian.thetradedesk.com/confluence/display/TSDKB/The+Trade+Desk+Macros" target="_blank">More TTD Macros.</a>
             </div>
             <form method="post" id="rule_setting_form" action="/add_rules" target="submitted">
                 <p>Choose Creative Files:</p>
+
                 <table style="width:40%">
                     <tr><td></td><td>file_name</td><td>size</td><td>extension</td><td>mime</td></tr>
                     {% for f in file_list %}
@@ -100,31 +103,32 @@
                     {% endfor %}
                 </table>
                 <br>
+
                 <table  style="width:40%">
                     <tr>
-                        <td style="padding: 10px 0 10px">Creative_Name:</td>
-                        <td><input type="text" name="creative_name_rule" style="width:180px" value="##cpn##"></td>
+                        <td style="padding: 10px 0 10px">Name:<br><input type="text" name="creative_name_rule" style="width:180px" value="##cpn##"></td>
                     </tr>
                     <tr>
-                        <td style="padding: 10px 0 10px">Description:</td>
-                        <td><input type="text" name="Description_rule" style="width:180px" value="##cpn##_##CreativeFileName##"></td>
+                        <td style="padding: 10px 0 10px">Description:<br>
+                        <input type="text" name="Description_rule" style="width:50%" value="##cpn##_##cfn##"></td>
                     </tr>
                     <tr>
-                        <td style="padding: 10px 0 10px">Asset File Name(if you don't change, the same as file name):</td>
-                        <td><input type="text" name="Asset_File_Name_rule" style="width:180px" value="##CreativeFileName##"></td>
+                        <td style="padding: 10px 0 10px">Asset File Name(if you don't change, the same as file name):<br>
+                        <input type="text" name="Asset_File_Name_rule" style="width:50%" value="##cfn##"></td>
                     </tr>
                     <tr>
-                        <td style="padding: 10px 0 10px">Clickthrough_url:</td>
-                        <td>
-                            <input type="text" name="clickthrough_rule" id="clickthrough_rule" style="width:360px"  value="https://trace.rtbasia.com/tkp?rta_k=fCKmfCn4oj&utm_campaign=##cpn##&utm_source=TTD&utm_content=%%AdGroupID%%_##size##&utm_medium=%%Media%%&device=Mobile&imei=__IMEI__&mac=__MAC__&mac1=__MAC1__&idfa=__IDFA__&androidid=__ANDROIDID__&oaid=__OAID__&uid=%%TDID%%&custid1=__CUSTID1__&custid2=__CUSTID2__&os=__OS__&ua=__UA__&ts=__TS__&clientip=%%IP%%&caid=__CAID__">
-                            <input type="button" value=" set RTBAsia default code " onclick="setRATrackURL()"></td>
+                        <td style="padding: 10px 0 10px">Clickthrough_url:<br>
+                        <input type="text" name="clickthrough_rule" id="clickthrough_rule" style="width:100%"  value="http://www.client.com/tkp?rta_k=fCKmfCn4oj&utm_campaign=##cpn##&utm_source=TTD&utm_content=%%AdGroupID%%_##cs##&utm_medium=%%Media%%&device=Mobile&imei=__IMEI__&mac=__MAC__&mac1=__MAC1__&idfa=__IDFA__&androidid=__ANDROIDID__&oaid=__OAID__&uid=%%TDID%%&custid1=__CUSTID1__&custid2=__CUSTID2__&os=__OS__&ua=__UA__&ts=__TS__&clientip=%%IP%%&caid=__CAID__"></td>
                     </tr>
                     <tr>
-                        <td style="padding: 10px 0 10px">Landing_page_url:</td>
-                        <td><input type="text" name="landing_page_rule" style="width:360px"  value="http://www.client.com/"></td>
+                        <td style="padding: 10px 0 10px">Landing_page_url:<br>
+                        <input type="text" name="landing_page_rule" style="width:100%"  value="http://www.client.com/"></td>
                     </tr>
                     <tr>
-                        <td colspan="2" style="padding: 10px 0 10px"><input type="button" value="Add Settings" onclick="combine_checkboxes()"></td>
+                        <td colspan="2" style="padding: 10px 0 10px">
+                            <input type="hidden" value="{{cn}}">
+                            <input type="button" value="Add Settings" onclick="combine_checkboxes()">
+                        </td>
                     </tr>
                 </table>
                 <input type="hidden" name="files" id="files" value="">

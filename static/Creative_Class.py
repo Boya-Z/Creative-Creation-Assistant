@@ -8,13 +8,13 @@ class Creative():
         },
         "creative_file_name":{
             "desc": "the Original Name of Creative File",
-            "key": "##CreativeFileName##",
+            "key": "##cfn##",
             "value": "*depend on uploaded creative files",
             "dynamic": True
         },
-        "size": {
-            "desc": "Creative Size",
-            "key": "##size##",
+        "Creative_size": {
+            "desc": "Creative Size, i.e. 300x250",
+            "key": "##cs##",
             "value": "*depend on uploaded creative files",
             "dynamic": True
         },
