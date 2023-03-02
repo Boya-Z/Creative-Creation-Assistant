@@ -46,6 +46,7 @@
 
 <div class="wrapper">
     <div class="sidebar">
+
         <h2>Automation Tools</h2>
         <div class="logo_wrap">
 				<a href="#">
@@ -53,11 +54,7 @@
         </div>
         <ul>
             <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
-            <li><a href="#"><i class="fa-solid fa-list-ol"></i>Campaign ID</a></li>
-            <li><a href="/CampaignName"><i class="fas fa-address-card"></i>Campaign Name</a></li>
-            <li><a href="/chooseFile"><i class="fa-solid fa-image"></i>Creative File</a></li>
-<!--            <li><a href="#"><i class="fas fa-address-book"></i>Contact</a></li>-->
-            <!--<li><a href="CreativeSetting"><i class="fa-solid fa-scale-balanced"></i>Rules</a></li>-->
+            <li><a href="/CampaignName"><i class="fa-solid fa-image"></i>Setup Template</a></li>
             <li><a href="/viewMacros"><i class="fa-sharp fa-solid fa-eye"></i>View All Macros</a></li>
             <!--<li><a href="#"><i class="fa-sharp fa-solid fa-file-export"></i>Output</a></li>-->
         </ul>
@@ -106,7 +103,16 @@
 
                 <table  style="width:40%">
                     <tr>
-                        <td style="padding: 10px 0 10px">Name:<br><input type="text" name="creative_name_rule" style="width:180px" value="##cpn##"></td>
+                        <td style="padding: 10px 0 10px">Name:&nbsp 
+                            <span class="mytooltip tooltip-effect-1">
+                            <span class="tooltip-item"><i class="fa-solid fa-circle-question"></i></span>
+                            <span class="tooltip-content clearfix">
+                            <img src="static/tooltipName.png">
+<!--                            <span class="tooltip-text">For column Name in template sheet</span>-->
+                            </span>
+                            </span>
+                            <br><input type="text" name="creative_name_rule" style="width:180px" value="##cpn##"></td>
+
                     </tr>
                     <tr>
                         <td style="padding: 10px 0 10px">Description:<br>

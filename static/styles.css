@@ -167,3 +167,76 @@ mark {
     background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
     box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6), inset -2px -2px 3px rgba(0, 0, 0, 0.6);
 }
+
+
+
+
+.mytooltip {
+display: inline;
+position: relative;
+z-index: 999
+}
+
+.mytooltip .tooltip-content {
+position: absolute;
+z-index: 9999;
+width: 300px;
+left: 105%;
+top: 50%;
+text-align: left;
+font-size: 14px;
+line-height: 30px;
+-webkit-box-shadow: -5px -5px 15px rgba(48, 54, 61, 0.2);
+box-shadow: -5px -5px 15px rgba(48, 54, 61, 0.2);
+background: #2b2b2b;
+opacity: 0;
+cursor: default;
+pointer-events: none
+}
+.mytooltip .tooltip-content::after {
+content: '';
+top: 5%;
+right: 100%;
+margin-top: -5px;
+border: solid transparent;
+height: 0;
+width: 0;
+position: absolute;
+pointer-events: none;
+border-color:transparent black transparent transparent;
+border-width: 10px;
+
+}
+.mytooltip .tooltip-content img {
+position: relative;
+height: 240px;
+display: block;
+float: left;
+
+}
+.mytooltip .tooltip-item::after {
+content: '';
+position: absolute;
+top: 50%;
+right: 100%;
+margin-top: -5px;
+
+width: 360px;
+height: 20px;
+pointer-events: none;
+-webkit-transform: translateX(-50%);
+transform: translateX(-50%)
+}
+.mytooltip:hover .tooltip-item::after {
+pointer-events: auto
+}
+.mytooltip:hover .tooltip-content {
+pointer-events: auto;
+opacity: 1;
+-webkit-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg);
+transform: translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)
+}
+.mytooltip:hover .tooltip-content2 {
+opacity: 1;
+font-size: 18px
+}
