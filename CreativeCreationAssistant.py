@@ -179,6 +179,13 @@ def empty():
         os.remove(os.path.join(directory, f))
     return render_template( 'chooseFile.html' )
 
+@app.route( '/delete_last_rule' )
+def delete_last_rule():
+    # delete the last rule of creative_rules list
+    session['creative_rules'].pop(-1)
+
+    return render_template( 'chooseFile.html' )
+
 @app.route('/download_zip')
 def download():
     exportXlsx()
