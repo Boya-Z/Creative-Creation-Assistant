@@ -3,29 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
-    <table style="width:100%">
-        <tr><td align="center">name_rule</td><td align="center">Description_rule</td><td align="center">Asset_File_Name_rule</td><td>clickthrough_url</td><td>landing_url</td></tr>
-        {% for rule in creative_rules %}
-            <tr>
-                <td>{{rule["name"]}}</td>
-                <td>{{rule["Description"]}}</td>
-                <!--
-                <td>
-                    {% for f in rule["creative_files"] %}
-                    {{f}} (original name,might be changed in excel)
-                    {% endfor %}
-                </td>
-                -->
-                <td>{{rule["Asset_File_Name"]}}</td>
-                <td>{{rule["clickthrough_url"]}}</td>
-                <td>{{rule["landing_page_url"]}}</td>
-            </tr>
-        {% endfor %}
-    </table>
-    <a href="/output" target="_blank">Step1: Download Results</a>
+<!--<div class="wrapper">-->
+    <div class="main_content">
+        <div class="info">
+            <p style="padding: 10px 0 10px">Excel Preview:</p>
+            <table style="width:100%" class="content-table1">
+
+                <thead>
+                <tr>
+<!--                    <td align="center">name_rule</td>-->
+                    <td>name_rule</td>
+                    <td>Description_rule</td>
+                    <td>Asset_File_Name_rule</td>
+                    <td>clickthrough_url</td>
+                    <td>landing_url</td>
+                </tr>
+                <tbody>
+                {% for rule in creative_rules %}
+                    <tr>
+                        <td>{{rule["name"]}}</td>
+                        <td>{{rule["Description"]}}</td>
+                        <!--
+                        <td>
+                            {% for f in rule["creative_files"] %}
+                            {{f}} (original name,might be changed in excel)
+                            {% endfor %}
+                        </td>
+                        -->
+                        <td>{{rule["Asset_File_Name"]}}</td>
+                        <td>{{rule["clickthrough_url"]}}</td>
+                        <td>{{rule["landing_page_url"]}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
     <p>
-    <a href="/download_zip" target="_blank">Step2: Download renamed creatives in zip file</a>
+    <form  id="output_excel" action="/output" style="padding: 10px 0 10px" >
+         <input type="submit" value="Step1: Download Results" >
+    </form>
+<!--    <a href="/output" target="_blank">Step1: Download Results</a>-->
+
+    <form  id="zip" action="/download_zip" style="padding: 10px 0 10px">
+         <input type="submit" value="Step2: Download renamed creatives in zip file" >
+    </form>
+<!--    <a href="/download_zip" target="_blank">Step2: Download renamed creatives in zip file</a>-->
+    </div>
+<!--</div>-->
 </body>
 </html>

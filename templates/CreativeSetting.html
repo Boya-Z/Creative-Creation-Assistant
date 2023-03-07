@@ -62,7 +62,7 @@
     <div class="main_content">
         <div class="header">Welcome to Tracking Creation Assistant.</div>
         <div class="info">
-            <div style="position:absolute; left:47%">
+            <div style="position:absolute; left:53%">
             <p>Macro Dictionary:</p>
                 <table class="content-table">
                 <thead>
@@ -139,7 +139,11 @@
                 </table>
                 <input type="hidden" name="files" id="files" value="">
             </form>
+            <form style="padding: 10px 0 10px" method="post" id="rule_setting_form_delete" action="/delete_last_rule" target="submitted">
+                <input type="submit" value="remove the last added rule" >
+            </form>
             <iframe style="border:0px; width:100%; height:260px" id="submitted" name="submitted" >
+
             </iframe><br>
 
       </div>
