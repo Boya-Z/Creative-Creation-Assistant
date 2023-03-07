@@ -102,6 +102,13 @@ def fileupload():
     session['creative_macros'] = creative_class.macros
     return render_template('CreativeSetting.html', file_list=file_list, macros=session['creative_macros'] )
 
+@app.route('/skip_fileUpload', methods=["POST"] )
+def skip_fileUpload():
+    creative_class = classCreative.Creative()
+    creative_class.set_campaign_macro_value(session['campaignName'])
+    session['creative_macros'] = creative_class.macros
+    return render_template('CreativeSetting.html', file_list=[], macros=session['creative_macros'] )
+
 @app.route( '/sumbitted' )
 def get_sumbitted():
     return render_template( 'submitted.html', creative_rules=session['creative_rules'] )

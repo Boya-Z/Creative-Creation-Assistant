@@ -133,7 +133,16 @@
                     <tr>
                         <td colspan="2" style="padding: 10px 0 10px">
                             <input type="hidden" value="{{cn}}">
-                            <input type="button" value="Add Settings" onclick="combine_checkboxes()">
+                            <input type="button" value="Add Rule" onclick="combine_checkboxes()">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="padding: 10px 0 10px">
+                            <p>Set rules from 3rd party tracking file:</p>
+                            <form method="post" action="/fileUpload" enctype="multipart/form-data">
+                                <input type="file" id="upload_outside_file" name="upload_outside_file"  onchange="load_miaozhen_tracking_file()" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" value="Load Miaozhen Tracking File" >
+                            </form>
+
                         </td>
                     </tr>
                 </table>
