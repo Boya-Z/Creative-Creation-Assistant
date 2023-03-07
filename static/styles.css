@@ -240,3 +240,43 @@ transform: translate3d(0, 0, 0) rotate3d(0, 0, 0, 0deg)
 opacity: 1;
 font-size: 18px
 }
+
+.content-table1 {
+    border-collapse: collapse;
+    font-size: 0.9em;
+    border-radius: 5px 5px 0 0;
+    word-wrap: break-word;
+
+    table-layout: fixed;
+    width: 200px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.content-table1 thead tr {
+    background-color: #4b4276;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.content-table1 th,
+.content-table1 td {
+    padding: 5px 5px;
+}
+
+.content-table1 tbody tr {
+    border-bottom: 2px solid #4b4276;
+    word-wrap: break-word
+}
+
+.content-table1 tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.content-table1 tbody tr:last-of-type {
+    border-bottom: 2px solid #4b4276;
+}
+.main_content .info p{
+  color: #4b4276;
+  font-weight: bold;
+}
