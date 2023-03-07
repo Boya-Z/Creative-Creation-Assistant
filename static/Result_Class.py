@@ -39,14 +39,13 @@ class Result():
         results = [  ]
         for rule_dict in creative_rules:
             for creative in rule_dict[ "creative_files" ]:
-                #macros["creative_file_name"]['key']
                 creative_file_name = "{}".format( Path(creative).stem )
                 creative_file_ext = os.path.splitext( creative )[1]
                 Asset_File_Name = rule_dict["Asset_File_Name"].replace( "{}".format( macros["creative_file_name"]["key"] ), creative_file_name )
                 #Asset_File_Name.replace( "{}".format( macros["creative_file_name"]["key"] ), creative_file_name )
                 #Asset_File_Name = rule_dict["Asset_File_Name"]
                 if Asset_File_Name != creative_file_name:
-                    shutil.copy( os.path.join( creative_path, creative ), os.path.join( os.path.abspath( export_path ), "{}{}".format( Asset_File_Name, creative_file_ext)  ))
+                    shutil.copy( os.path.join( creative_path, creative ), os.path.join( os.path.abspath( export_path ), "{}{}".format( Asset_File_Name, creative_file_ext )  ))
                     '''
                     if os.path.exists( os.path.join( os.path.abspath( export_path ), Asset_File_Name)  ):
                         os.remove( os.path.abspath( "{}{}".format( export_path, Asset_File_Name) ))
@@ -58,16 +57,20 @@ class Result():
                     shutil.copy(os.path.join( creative_path, creative ),
                                 os.path.join(os.path.abspath(export_path), creative))
                 lines = []
+                name = rule_dict["name"]
+                clickthrough_url = rule_dict["clickthrough_url"]
+                landing_page_url = rule_dict["landing_page_url"]
+                Description = rule_dict["Description"]
+                Asset_File_Name = "{}{}".format( Asset_File_Name, creative_file_ext )
                 for macro_obj, macro_dict in macros.items():
                     if macro_dict['dynamic'] == False:
-                        name = rule_dict["name"].replace( "{}".format( macro_dict["key"] ), macro_dict["value"] )
-                        clickthrough_url = rule_dict["clickthrough_url"].replace( "{}".format(macro_dict["key"]), macro_dict["value"] )
-                        landing_page_url = rule_dict["landing_page_ur" \
-                                                     "l"].replace( "{}".format(macro_dict["key"]), macro_dict["value"] )
-                        Description = rule_dict["Description"].replace( "{}".format(macro_dict["key"]), macro_dict["value"] )
-                        Asset_File_Name = rule_dict["Asset_File_Name"].replace( "{}".format(macro_dict["key"]), macro_dict["value"] )
+                        name = name.replace( "{}".format( macro_dict["key"] ), macro_dict["value"] )
+                        clickthrough_url = clickthrough_url.replace( "{}".format(macro_dict["key"]), macro_dict["value"] )
+                        landing_page_url = landing_page_url.replace( "{}".format(macro_dict["key"]), macro_dict["value"] )
+                        Description = Description.replace( "{}".format(macro_dict["key"]), macro_dict["value"] )
+                        Asset_File_Name = Asset_File_Name.replace( "{}".format(macro_dict["key"]), macro_dict["value"] )
                     else: # 动态宏替换处理
-                        if macro_obj == "size":
+                        if macro_obj == "Creative_size":
                             # 读创意文件的size, 存如 size
                             from PIL import Image
                             im = Image.open( "{}\\{}".format( creative_path,creative ) )
@@ -78,22 +81,15 @@ class Result():
                             landing_page_url = landing_page_url.replace( "{}".format( macro_dict["key"] ), size )
                             Description = Description.replace( "{}".format( macro_dict["key"] ), size )
                             Asset_File_Name = Asset_File_Name.replace( "{}".format( macro_dict["key"] ), size )
-                        '''
+
                         if macro_obj == "creative_file_name":
                             # 读文件名 存入creative_file_name
-                            from pathlib import Path
-                            creative_file_name = "{}".format( Path(creative).stem )
-                            name = name.replace( "{}".format( macro_dict["key"] ), creative_file_name )
-                            clickthrough_url = clickthrough_url.replace( "{}".format( macro_dict["key"] ), creative_file_name )
-                            landing_page_url = landing_page_url.replace( "{}".format( macro_dict["key"] ), creative_file_name )
-                            Description = Description.replace( "{}".format( macro_dict["key"] ), creative_file_name )
-                            Asset_File_Name = Asset_File_Name.replace( "{}".format( macro_dict["key"] ), creative_file_name)
-                            #加原文件名的后缀
-                            import os
-                            file_extension = os.path.splitext(creative)[1]
-                            Asset_File_Name = "{}{}".format(Asset_File_Name, file_extension)
-                            # copy file to export folder, and rename it
-                        '''
+                            name = name.replace( "{}".format( macro_dict["key"] ), Asset_File_Name )
+                            clickthrough_url = clickthrough_url.replace( "{}".format( macro_dict["key"] ), Asset_File_Name )
+                            landing_page_url = landing_page_url.replace( "{}".format( macro_dict["key"] ), Asset_File_Name )
+                            Description = Description.replace( "{}".format( macro_dict["key"] ), Asset_File_Name )
+                            Asset_File_Name = Asset_File_Name.replace( "{}".format( macro_dict["key"] ), Asset_File_Name)
+
 
 
 
