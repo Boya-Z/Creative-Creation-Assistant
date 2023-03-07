@@ -72,18 +72,8 @@ def fileupload():
     context = {}
     file_list = []
     upload_path = session['upload_path']
-    '''
-    if not os.path.exists("./export/{}/".format( classCreative.Creative.macros["campaign_name"]["value"]) ):
-        os.makedirs("./export/{}/".format( classCreative.Creative.macros["campaign_name"]["value"]) )
-    '''
     context['uploaded_number'] = len( request.files )
     upload_files = request.files.getlist('files')
-    '''
-    if not os.path.exists( "./upload/{}/".format( classCreative.Creative.macros["campaign_name"]["value"] ) ):
-        os.makedirs( "./upload/{}/".format( classCreative.Creative.macros["campaign_name"]["value"] ) )
-    upload_campaign_path = "./upload/{}/".format( classCreative.Creative.macros["campaign_name"]["value"] )
-    '''
-    #upload_campaign_path = "./upload/{}/".format( campaignName )
     for upload_file in upload_files:
         temp = []
         upload_file_path = os.path.join( upload_path, upload_file.filename )
@@ -108,6 +98,21 @@ def skip_fileUpload():
     creative_class.set_campaign_macro_value(session['campaignName'])
     session['creative_macros'] = creative_class.macros
     return render_template('CreativeSetting.html', file_list=[], macros=session['creative_macros'] )
+
+@app.route('/miaozhenfileUpload', methods=["POST"] )
+def miaozhenfileUpload():
+    import static.Miaozhen_Tracking_Class as miaozhen
+    upload_path = session['upload_path']
+    upload_file = request.files.getlist('upload_outside_file')[0]
+    upload_file_path = os.path.join( upload_path, upload_file.filename )
+    upload_file.save( upload_file_path )
+    miaozhen_obj = miaozhen.Miaozhen_Tracking( upload_file_path )
+    sheets = miaozhen_obj.get_sheets()
+    return render_template( 'please select excel sheet.html', sheets=sheets )
+
+@app.route('/selected_excel_sheet', methods=["POST"] )
+def selected_excel_sheet():
+    return True
 
 @app.route( '/sumbitted' )
 def get_sumbitted():

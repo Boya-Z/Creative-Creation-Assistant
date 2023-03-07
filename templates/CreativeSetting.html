@@ -38,8 +38,17 @@
             }
 
             highlightSize('250x250');
-
         }
+
+        function show_outside_excel_execute(){
+            $('#outside_file_form').submit()
+            $('#outside_tracking_file_div').show();
+        }
+
+        function hide_outside_tracking_file_div(){
+            $('#outside_tracking_file_div').hidden();
+        }
+
     </script>
 </head>
 <body>
@@ -104,7 +113,7 @@
                 <table  style="width:40%">
                     <tr>
                         <td style="padding: 10px 0 10px">Name:&nbsp
-                            <span class="mytooltip tooltip-effect-1">
+                            <span class="mytooltip tooltip-effect-1"  style="z-index:-1">
                             <span class="tooltip-item"><i class="fa-solid fa-circle-question"></i></span>
                             <span class="tooltip-content clearfix">
                             <img src="static/tooltipName.png">
@@ -136,21 +145,22 @@
                             <input type="button" value="Add Rule" onclick="combine_checkboxes()">
                         </td>
                     </tr>
-                    <tr>
-                        <td colspan="2" style="padding: 10px 0 10px">
-                            <p>Set rules from 3rd party tracking file:</p>
-                            <form method="post" action="/fileUpload" enctype="multipart/form-data">
-                                <input type="file" id="upload_outside_file" name="upload_outside_file"  onchange="load_miaozhen_tracking_file()" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" value="Load Miaozhen Tracking File" >
-                            </form>
-
-                        </td>
-                    </tr>
                 </table>
                 <input type="hidden" name="files" id="files" value="">
             </form>
+            <table>
+                <tr>
+                    <td colspan="2" style="padding: 10px 0 10px">
+                        <p>Set rules from 3rd party tracking file:</p>
+                        <form method="post" id="outside_file_form" action="/miaozhenfileUpload" enctype="multipart/form-data">
+                            <input type="file" id="upload_outside_file" name="upload_outside_file"  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" value="Load Miaozhen Tracking File" >
+                            <input type="button" value='Upload' onclick="show_outside_excel_execute()">
+                        </form>
+                    </td>
+                </tr>
+            </table>
             <iframe style="border:0px; width:100%; height:260px" id="submitted" name="submitted" >
-            </iframe><br>
-
+            </iframe>
       </div>
     </div>
 </div>

@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Choose File</title>
+    <link rel="stylesheet" href="static/styles.css">
+<!--    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">-->
+    <script src="{{ url_for('static', filename='28adb9f300.js') }}" crossorigin="anonymous"></script>
+    <script>
+            function validateForm(){
+                var image = document.getElementById("image").value;
+                var name = document.getElementById("name").value;
+                if (image =='')
+                {
+                    return false;
+                }
+                if(name =='')
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+                return false;
+            }
+
+             function updateList() {
+                var input = document.getElementById('myFile');
+                var output = document.getElementById('fileList');
+                var children = "";
+                for (var i = 0; i < input.files.length; ++i) {
+                    children += '<li>' + '<a>File Name: </a>' + input.files.item(i).name
+                        + '<a> &nbsp;&nbsp;File Type: </a>' + input.files.item(i).type  + '</li>';
+                }
+                output.innerHTML = '<ul>'+children+'</ul>';
+            }
+    </script>
+</head>
+<body>
+<div class="wrapper">
+    <div class="sidebar">
+
+        <h2>Automation Tools</h2>
+        <div class="logo_wrap">
+                <a href="#">
+                    <img src="static/TTD_BIG.png" alt="logo"></a>
+        </div>
+        <ul>
+            <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
+            <li><a href="/CampaignName"><i class="fa-solid fa-image"></i>Setup Template</a></li>
+            <li><a href="/viewMacros"><i class="fa-sharp fa-solid fa-eye"></i>View All Macros</a></li>
+            <!--<li><a href="#"><i class="fa-sharp fa-solid fa-file-export"></i>Output</a></li>-->
+        </ul>
+    </div>
+    <div class="main_content">
+        <div  style="padding-top: 20px; padding-left:20px">
+        <table>
+            <tr>
+                <td>
+                    Please select the sheet:
+                </td>
+            </tr>
+            <form method="post" action="/selected_excel_sheet">
+                {% for sheetname in sheets %}
+                <tr>
+                    <td><input type="radio" name="selected_sheet" value="{{sheetname}}">{{sheetname}}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td>
+                        <input type="submit" value="Submit">
+                    </td>
+                </tr>
+            </form>
+        </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
