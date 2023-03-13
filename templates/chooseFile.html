@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="static/styles.css">
 <!--    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">-->
     <script src="{{ url_for('static', filename='28adb9f300.js') }}" crossorigin="anonymous"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script>
             function validateForm(){
                 var image = document.getElementById("image").value;
@@ -34,8 +35,27 @@
                     children += '<li>' + '<a>File Name: </a>' + input.files.item(i).name
                         + '<a> &nbsp;&nbsp;File Type: </a>' + input.files.item(i).type  + '</li>';
                 }
-                output.innerHTML = '<ul>'+children+'</ul>';
+                var next_div = document.getElementById('next_div');
+                output.innerHTML = 'Updated files:<ul>'+children+'</ul>'+'<input type="submit" value="Next">';
+                output.style.display = ""
+             }
+
+        function updatemiaozhenfile() {
+                var input = document.getElementById('miaozhen_file');
+                var output = document.getElementById('miaozhen_fileList');
+                var children = "";
+                for (var i = 0; i < input.files.length; ++i) {
+                    children += '<li>' + '<a>File Name: </a>' + input.files.item(i).name
+                        + '<a> &nbsp;&nbsp;File Type: </a>' + input.files.item(i).type  + '</li>';
+                }
+                output.innerHTML = 'Updated files:<ul>' + children + '</ul>' + '<input type="button" value="Next" onclick="show_outside_excel_execute()"> ';
+                output.style.display = ""
             }
+
+        function show_outside_excel_execute(){
+            $('#outside_file_form').submit()
+            $('#outside_tracking_file_div').show();
+        }
     </script>
 </head>
 <body>
@@ -58,23 +78,31 @@
     <div class="main_content">
         <div class="header">Welcome to Tracking Creation Assistant.</div>
         <div class="info">
-            <p>Click on the "Choose File" button to upload a file:</p>
-            <form method="post" action="/fileUpload" enctype="multipart/form-data">
-                <input type="file" id="myFile" name="files" multiple="multiple"  onchange="updateList()" accept="image/*" >
-                <div></div>
-                <p></p>
-                <a href="/empty" >
-                    <button class="styled"type="button">clean all rules& files history</button>
-                </a>
-                <p>Selected files:</p>
-                <div id="fileList"></div>
-                <input type="submit" value='Upload'>
+            <div style="border-radius: 25px; top:20px; left: 20px; border: solid 1px #888; padding: 20px 20px; width: 45%">
+                <p>Upload files and setup templates</p><br>
+                <form method="post" action="/fileUpload" enctype="multipart/form-data">
+                    <input type="file" id="myFile" name="files" multiple="multiple" onchange="updateList()" accept="image/*">
+                    <br></br>
 
-            </form>
-            <br>
-            <form method="post" action="/skip_fileUpload" >
-                <input type="submit" value='Skip'>
-            </form>
+                    <div id="fileList" style="display:none" >
+                    </div>
+                    <br>
+                    <a href="/empty" >
+                        <button class="styled"type="button">clean all rules& files history</button>
+                    </a>
+                </form>
+            </div>
+            <div style="border-radius: 25px; position:relevant; top:20px; left: 20px; border: solid 1px #888; padding: 20px 20px; width: 45% ">
+                <p>Setup from Miaozhen traking file</p><br>
+                <form method="post" id="outside_file_form" action="/miaozhenfileUpload" enctype="multipart/form-data" >
+                    <input type="file" id="miaozhen_file" name="upload_outside_file"  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="updatemiaozhenfile()"  >
+                    <div id="miaozhen_fileList" style="display:none" >
+
+                    </div>
+
+                    <br><br>
+                </form>
+            </div>
         </div>
     </div>
 </div>

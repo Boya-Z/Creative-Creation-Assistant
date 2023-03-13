@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <title>Choose File</title>
     <link rel="stylesheet" href="static/styles.css">
-<!--    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">-->
     <script src="{{ url_for('static', filename='28adb9f300.js') }}" crossorigin="anonymous"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script>
             function validateForm(){
                 var image = document.getElementById("image").value;
@@ -36,6 +36,18 @@
                 }
                 output.innerHTML = '<ul>'+children+'</ul>';
             }
+
+            $(document).ready(function()
+                {
+                    $('#selected_radio').first().attr("checked","checked");
+                }
+            )
+
+
+            function select_radio( str ){
+                $('#selected_radio').removeAttr("checked");
+                $('#selected_radio[value="'+ str +'"]').attr("checked","checked");
+            }
     </script>
 </head>
 <body>
@@ -51,26 +63,28 @@
             <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
             <li><a href="/CampaignName"><i class="fa-solid fa-image"></i>Setup Template</a></li>
             <li><a href="/viewMacros"><i class="fa-sharp fa-solid fa-eye"></i>View All Macros</a></li>
-            <!--<li><a href="#"><i class="fa-sharp fa-solid fa-file-export"></i>Output</a></li>-->
+
         </ul>
     </div>
     <div class="main_content">
-        <div  style="padding-top: 20px; padding-left:20px">
+        <div  style="position:relative; left:20px; top: 20px">
         <table>
             <tr>
-                <td>
-                    Please select the sheet:
+                <td colspan="2">
+                    <p>Please select the sheet:</p>
                 </td>
             </tr>
             <form method="post" action="/selected_excel_sheet">
                 {% for sheetname in sheets %}
                 <tr>
-                    <td><input type="radio" name="selected_sheet" value="{{sheetname}}">{{sheetname}}</td>
+                    <td style="width: 20px"><input type="radio" id="selected_radio" name="selected_radio" value="{{sheetname}}" ></td>
+                    <td><a style="cursor:pointer" onclick="select_radio('{{sheetname}}') ">{{sheetname}}</a></td>
                 </tr>
                 {% endfor %}
                 <tr>
-                    <td>
-                        <input type="submit" value="Submit">
+                    <td colspan="2">
+                        <input type="hidden" name="name_sep" value=' - '>
+                        <input type="submit" value="Next">
                     </td>
                 </tr>
             </form>

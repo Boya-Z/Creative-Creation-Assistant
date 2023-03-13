@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>init creative name</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <script src="{{ url_for('static', filename='28adb9f300.js') }}" crossorigin="anonymous"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        function check_switch( id ){
+            var check = $('#'+id).attr("checked")
+            if( check == "checked" ){
+                $('#'+id).attr( "checked",false )  //如果鼠标点击选中了，执行后无法取消选中
+            }else{
+                $('#'+id).attr( "checked",true )
+                $('#'+id).prop( "checked",true )
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="wrapper">
+    <div class="sidebar">
+
+        <h2>Automation Tools</h2>
+        <div class="logo_wrap">
+                <a href="#">
+                    <img src="static/TTD_BIG.png" alt="logo"></a>
+        </div>
+        <ul>
+            <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
+            <li><a href="/CampaignName"><i class="fa-solid fa-image"></i>Setup Template</a></li>
+            <li><a href="/viewMacros"><i class="fa-sharp fa-solid fa-eye"></i>View All Macros</a></li>
+
+        </ul>
+    </div>
+    <div class="main_content">
+        <div  style="position:relative; left:20px; top: 20px; padding-bottom:20px">
+            <form action="/select_creative_name" method="post">
+            <p>The tool will generate Asset File Name with these fields: <input type="submit" value="Next"></p>
+                <table width="100%">
+                    <tr>
+                        {% if recommand_site_list|length > 0 %}
+                            <div  style="border: 1px solid; margin-left: 10px; float:left; padding: 6px 6px; cursor:pointer" onclick="check_switch('recommand_site')" >
+                                <input type="checkbox" name="recommand_site" id="recommand_site" value="1" checked="checked"><b>Site</b><br>
+                                <input type="hidden" name="recommand_site_list" value="{{','.join(recommand_site_list)}}">
+                                <!-- candidate_site 整合到 recommand_site 中 <input type="hidden" name="candidate_site" value="1"> -->
+                                <input type="hidden" name="candidate_site_list" value="{{','.join(candidate_site_list)}}">
+                                {% for e in recommand_site_list %}
+                                    {{e}}<br>
+                                {% endfor %}
+                                {% for e in candidate_site_list %}
+                                    {{e}}<br>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if recommand_market_list|length > 0 %}
+                            <div style="border: 1px solid; margin-left: 10px; float:left; padding: 6px 6px; cursor:pointer" onclick="check_switch('recommand_market')" >
+                                <input type="checkbox" name="recommand_market" id="recommand_market" value="1" checked="checked"><b>Market</b><br>
+                                <input type="hidden" name="recommand_market_list" value="{{ ','.join(recommand_market_list) }}">
+                                {% for e in recommand_market_list %}
+                                    {{e}}<br>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if recommand_size_list|length > 0 %}
+                            <div style="border: 1px solid; margin-left: 10px; float:left; padding: 6px 6px; cursor:pointer" onclick="check_switch('recommand_size')" >
+                                <input type="checkbox" name="recommand_size" id="recommand_size" value="1" checked="checked"><b>creative_size</b><br>
+                                <input type="hidden" name="recommand_size_list" value="{{','.join(recommand_size_list)}}">
+                            {% for e in recommand_size_list %}
+                                {{e}}<br>
+                            {% endfor %}
+                            </div>
+                        {% endif %}
+                    </tr>
+                </table>
+            <br>
+                <!--
+            <p>Well, you can combine these fields to generate Asset File Name:</p>
+
+                <table width="100%">
+                    <tr>
+                        {% for fields in name_struct_list %}
+                            <div style="border: 1px solid; margin-left: 10px; float:left; padding: 6px 6px">
+                            {% for e in fields %}
+                                    {{e}}<br>
+                            {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </tr>
+                </table>
+                -->
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

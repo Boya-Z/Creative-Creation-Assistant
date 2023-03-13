@@ -6,7 +6,7 @@ class Result():
         result_according_template = ""
         results_list = []
 
-    def generate_results( self, creative_rules, macros, creative_path, export_path ):
+    def generate_results(self, creative_rules, macros, creative_path, export_path):
         import shutil, os
         from pathlib import Path
         ''' example
@@ -36,16 +36,19 @@ class Result():
         ]
         '''
 
-        results = [  ]
+        results = []
         for rule_dict in creative_rules:
-            for creative in rule_dict[ "creative_files" ]:
-                creative_file_name = "{}".format( Path(creative).stem )
-                creative_file_ext = os.path.splitext( creative )[1]
-                Asset_File_Name = rule_dict["Asset_File_Name"].replace( "{}".format( macros["creative_file_name"]["key"] ), creative_file_name )
-                #Asset_File_Name.replace( "{}".format( macros["creative_file_name"]["key"] ), creative_file_name )
-                #Asset_File_Name = rule_dict["Asset_File_Name"]
+            for creative in rule_dict["creative_files"]:
+                creative_file_name = "{}".format(Path(creative).stem)
+                creative_file_ext = os.path.splitext(creative)[1]
+                Asset_File_Name = rule_dict["Asset_File_Name"].replace("{}".format(macros["creative_file_name"]["key"]),
+                                                                       creative_file_name)
+                # Asset_File_Name.replace( "{}".format( macros["creative_file_name"]["key"] ), creative_file_name )
+                # Asset_File_Name = rule_dict["Asset_File_Name"]
                 if Asset_File_Name != creative_file_name:
-                    shutil.copy( os.path.join( creative_path, creative ), os.path.join( os.path.abspath( export_path ), "{}{}".format( Asset_File_Name, creative_file_ext )  ))
+                    shutil.copy(os.path.join(creative_path, creative), os.path.join(os.path.abspath(export_path),
+                                                                                    "{}{}".format(Asset_File_Name,
+                                                                                                  creative_file_ext)))
                     '''
                     if os.path.exists( os.path.join( os.path.abspath( export_path ), Asset_File_Name)  ):
                         os.remove( os.path.abspath( "{}{}".format( export_path, Asset_File_Name) ))
@@ -54,113 +57,237 @@ class Result():
 
                     # flask.send_file(os.path.join(os.path.abspath( "./export" ), Asset_File_Name))
                 else:
-                    shutil.copy(os.path.join( creative_path, creative ),
+                    shutil.copy(os.path.join(creative_path, creative),
                                 os.path.join(os.path.abspath(export_path), creative))
-                lines = []
+                lines = {}
                 name = rule_dict["name"]
                 clickthrough_url = rule_dict["clickthrough_url"]
                 landing_page_url = rule_dict["landing_page_url"]
                 Description = rule_dict["Description"]
-                Asset_File_Name = "{}{}".format( Asset_File_Name, creative_file_ext )
+                Asset_File_Name = "{}{}".format(Asset_File_Name, creative_file_ext)
                 for macro_obj, macro_dict in macros.items():
                     if macro_dict['dynamic'] == False:
-                        name = name.replace( "{}".format( macro_dict["key"] ), macro_dict["value"] )
-                        clickthrough_url = clickthrough_url.replace( "{}".format(macro_dict["key"]), macro_dict["value"] )
-                        landing_page_url = landing_page_url.replace( "{}".format(macro_dict["key"]), macro_dict["value"] )
-                        Description = Description.replace( "{}".format(macro_dict["key"]), macro_dict["value"] )
-                        Asset_File_Name = Asset_File_Name.replace( "{}".format(macro_dict["key"]), macro_dict["value"] )
-                    else: # 动态宏替换处理
+                        name = name.replace("{}".format(macro_dict["key"]), macro_dict["value"])
+                        clickthrough_url = clickthrough_url.replace("{}".format(macro_dict["key"]), macro_dict["value"])
+                        landing_page_url = landing_page_url.replace("{}".format(macro_dict["key"]), macro_dict["value"])
+                        Description = Description.replace("{}".format(macro_dict["key"]), macro_dict["value"])
+                        Asset_File_Name = Asset_File_Name.replace("{}".format(macro_dict["key"]), macro_dict["value"])
+                    else:  # 动态宏替换处理
                         if macro_obj == "Creative_size":
                             # 读创意文件的size, 存如 size
                             from PIL import Image
-                            im = Image.open( "{}\\{}".format( creative_path,creative ) )
-                            size = "{}x{}".format( im.size[0], im.size[1] )
-                            #size = '160x40'  # example
-                            name = name.replace( "{}".format( macro_dict["key"] ), size )
-                            clickthrough_url = clickthrough_url.replace( "{}".format( macro_dict["key"] ), size )
-                            landing_page_url = landing_page_url.replace( "{}".format( macro_dict["key"] ), size )
-                            Description = Description.replace( "{}".format( macro_dict["key"] ), size )
-                            Asset_File_Name = Asset_File_Name.replace( "{}".format( macro_dict["key"] ), size )
+                            im = Image.open("{}\\{}".format(creative_path, creative))
+                            size = "{}x{}".format(im.size[0], im.size[1])
+                            # size = '160x40'  # example
+                            name = name.replace("{}".format(macro_dict["key"]), size)
+                            clickthrough_url = clickthrough_url.replace("{}".format(macro_dict["key"]), size)
+                            landing_page_url = landing_page_url.replace("{}".format(macro_dict["key"]), size)
+                            Description = Description.replace("{}".format(macro_dict["key"]), size)
+                            Asset_File_Name = Asset_File_Name.replace("{}".format(macro_dict["key"]), size)
 
                         if macro_obj == "creative_file_name":
                             # 读文件名 存入creative_file_name
-                            name = name.replace( "{}".format( macro_dict["key"] ), Asset_File_Name )
-                            clickthrough_url = clickthrough_url.replace( "{}".format( macro_dict["key"] ), Asset_File_Name )
-                            landing_page_url = landing_page_url.replace( "{}".format( macro_dict["key"] ), Asset_File_Name )
-                            Description = Description.replace( "{}".format( macro_dict["key"] ), Asset_File_Name )
-                            Asset_File_Name = Asset_File_Name.replace( "{}".format( macro_dict["key"] ), Asset_File_Name)
+                            name = name.replace("{}".format(macro_dict["key"]), Asset_File_Name)
+                            clickthrough_url = clickthrough_url.replace("{}".format(macro_dict["key"]), Asset_File_Name)
+                            landing_page_url = landing_page_url.replace("{}".format(macro_dict["key"]), Asset_File_Name)
+                            Description = Description.replace("{}".format(macro_dict["key"]), Asset_File_Name)
+                            Asset_File_Name = Asset_File_Name.replace("{}".format(macro_dict["key"]), Asset_File_Name)
 
-
-
-
-
-                lines.append( name ) # name
-                lines.append( Description )  # Description
-                # lines.append( creative ) # Asset File Name (required)
-                lines.append(Asset_File_Name)  # Asset File Name (required)
-                lines.append( clickthrough_url )  # Clickthrough URL (required)
-                lines.append( landing_page_url ) # Landing Page URL (required)
-                lines.append( "" )  # Ad Server
-                lines.append( "" )  # Creative Placement ID
-                lines.append("")  # Third Party Tracking Tag 1
-                lines.append("")  # Third Party Tracking Tag 2
-                lines.append("")  # Third Party Tracking Tag 3
-                lines.append("")  # Third Party Tracking URL 1
-                lines.append("")  # Third Party Tracking URL 2
-                lines.append("")  # Third Party Tracking URL 3
-                lines.append("")  # Yahoo Offer Type
-                lines.append("")  # Flight Start Date
-                lines.append("")  # Flight End Date
-                lines.append("")  # Flight Time Zone ID
-                lines.append("")  # Political Candidate
-                lines.append("")  # Mini Program Id
-                lines.append("")  # Mini Program Path
+                lines['Name'] = name  # name
+                lines['Description'] = Description  # Description
+                lines['Asset_File_Name'] = Asset_File_Name  # Asset File Name (required)
+                lines['Clickthrough_URL'] = clickthrough_url  # Clickthrough URL (required)
+                lines['Landing_Page_URL'] = landing_page_url  # Landing Page URL (required)
                 results.append(lines)
         self.results_list = results
         return True
 
-    def export_to_excel( self, path, name ):
+    def save_display_sheet(self, workbook, data_dict, row, path, name, fill_bgcolor_and_str=0, fill_cell="", color="#fff", fill_str="" ):
+        sheet = workbook.get_sheet_by_name('Hosted Display')
+        sheet_field_index = {
+            "Name": 0,
+            "Description": 1,
+            "Asset_File_Name": 2,
+            "Clickthrough_URL": 3,
+            "Landing_Page_URL": 4,
+            "Third_Party_Tracking_URL_1": 10,
+            "impression_url": 10
+        }
+        for k, v in data_dict.items():
+            try:
+                sheet.cell( row = row+1, column=sheet_field_index[k]+1, value=v )
+            except Exception:
+                print( k, v , row, path, name )
+
+        if fill_bgcolor_and_str == 1:
+            self.cell_fill( sheet=sheet, row = row+1, column=sheet_field_index[fill_cell]+1, color=color, fill_str=fill_str )
+        new_row = row + 1
+        return new_row
+
+    def save_video_sheet(self, workbook, data_dict, row, path, name, fill_bgcolor_and_str=0, fill_cell="", color="#fff", fill_str="" ):
+        sheet = workbook.get_sheet_by_name('Hosted Video')
+        sheet_field_index = {
+            "Name": 0,
+            "Description": 1,
+            "Asset_File_Name": 2,
+            "Clickthrough_URL": 3,
+            "Landing_Page_URL": 4,
+            "Video_Event_URLs_Impression": 9,
+            "impression_url": 9,
+            "Video_Event_URLs_Click": 10,
+            "Video_Event_URLs_Complete": 15
+        }
+
+        for k, v in data_dict.items():
+            try:
+                sheet.cell(row=row + 1, column=sheet_field_index[k] + 1, value=v )
+            except Exception:
+                print(k, v, row, path, name)
+        if fill_bgcolor_and_str == 1:
+            self.cell_fill(sheet=sheet, row=row + 1, column=sheet_field_index[fill_cell] + 1, color=color, fill_str=fill_str)
+        new_row = row + 1
+        return new_row
+
+    def save_native_sheet(self, workbook, data_dict, row, path, name, fill_bgcolor_and_str=0, fill_cell="", color="#fff", fill_str=""  ):
+        sheet = workbook.get_sheet_by_name('Hosted Native')
+        sheet_field_index = {
+            "Name": 0,
+            "Description": 1,
+            "Asset_File_Name": 2,
+            "Main Asset File Names": 2,
+            "Clickthrough_URL": 6,
+            "Landing_Page_URL": 7,
+            "Native_Short_Title": 10,
+            "Native_Long_Title": 11,
+            "Native_Short_Description": 12,
+            "Native_Long_Description": 13,
+            "Sponsor": 14,
+            "Third_Party_Tracking_URL_1": 21,
+            "impression_url": 21
+        }
+
+        for k, v in data_dict.items():
+            try:
+                sheet.cell( row= row + 1, column=sheet_field_index[k] + 1, value=v)
+            except Exception:
+                print( k, v, row, path, name )
+        if fill_bgcolor_and_str == 1:
+            self.cell_fill(sheet=sheet, row=row + 1, column=sheet_field_index[fill_cell] + 1, color=color, fill_str=fill_str)
+        new_row = row + 1
+        return new_row
+
+    def cell_fill(self, sheet, row, column, color, fill_str=""):
+        from openpyxl.styles import PatternFill
+        orange_fill = PatternFill( fill_type='solid', fgColor=color )
+        sheet.cell( row=row, column=column, value="_".join(fill_str) )
+        sheet.cell( row=row, column=column ).fill = orange_fill
+
+
+    def export_to_excel( self, path, name, sheet="Hosted Display", data_set={} ):
         import openpyxl
-        from openpyxl.utils import get_column_letter
+        # 写入正式数据
+        display_row = 1
+        video_row = 1
+        native_row = 1
         workbook = openpyxl.load_workbook('./BulkCreativeImportTemplate.v28.xlsx')
 
-        sheet = workbook.get_sheet_by_name('Hosted Display')
+        if len( data_set ) == 0:
+            data_set = self.results_list
+        for dicts in data_set:
+            if sheet=="Hosted Display":
+                display_row = self.save_display_sheet( workbook, dicts, display_row, path, name )
+            elif sheet=="Hosted Video":
+                video_row = self.save_video_sheet( workbook, dicts, video_row, path, name )
+            elif sheet=="Hosted Native":
+                native_row = self.save_native_sheet( workbook,dicts, native_row, path, name )
+            else:
+                print( dicts )
+                pass
+        workbook.save("{}/{}".format(path, name))
+        return name
+
+
+class MiaozhenResult(Result):
+
+    def save_results_from_miaozhen_set(self, outside_data_set, export_path, result_file, name_conversion_from={},
+                                       name_sep="-"):
+        import openpyxl, re
+        kv_sheets = {
+            "Mobile Video": ["Hosted Video", 1],
+            "Display": ["Hosted Display", 1],
+            "Native Display": ["Hosted Native", 1],
+            "Splash": ["Hosted Display", 1]
+        }
+        # from urllib.parse import urlparse
+        workbook = openpyxl.load_workbook('./BulkCreativeImportTemplate.v28.xlsx')
+
+        results = []
+
+        # 根据 name_conversion_from，设置单元格底色
+        # 创意名称单元个底色初始化
+        Asset_File_Name_colors = []
+        current_name_content = []  # 根绝name_conversion_from 数量，设置对应元素，如果 name_conversion_from 有四项，那么本变量中就有四个元素
+        cell_colors = ["D9E1F2", "FCE4D6"]
+        cell_color_index = 0
+        for line_index, data_lines in enumerate(outside_data_set):
+            lines = {}
+            name = data_lines[2]
+            Description = ""
+            Asset_File_Name = ""  # need modified
+
+            try:
+                clickthrough_url = data_lines[4]
+            except IndexError:
+                print("Line:{} doesn't have click_url".format(line_index, data_lines))
+
+            impression_url = data_lines[3]
+
+            landing_Page_url = clickthrough_url.split("&o=")[1]
+
+            lines['Name'] = name  # name
+            lines['Description'] = Description # Description
+            lines['Asset_File_Name'] =  Asset_File_Name # Asset File Name (required)
+            lines['Clickthrough_URL'] = clickthrough_url # Clickthrough URL (required)
+            lines['Landing_Page_URL'] = landing_Page_url # Landing Page URL (required)
+            lines['impression_url'] = impression_url # Third Party Tracking URL 1
+            results.append(lines)
+
+
+
+        # 根据关键词区分sheet
+        all_keywords = []
+        for field, data_set in name_conversion_from.items():
+            all_keywords += data_set
+        re_pattern_string = "|".join( all_keywords )
+
+
         # 写入正式数据
-        for l_index, line in enumerate(self.results_list):
-            col = 1
-            for col_index, e in enumerate(line):
-                sheet.cell(row=2 + l_index, column=col + col_index, value=e)
-        result_file = name
+        display_row = 1
+        video_row = 1
+        native_row = 1
+        name_keywords = []
+        previous_name_keywords = []
+        for l_index, lines in enumerate(results):
 
+            # 从lines[0](name)中找关键字匹配sheet
+            ad_type = re.findall(r'{}({}){}'.format(name_sep, "|".join(kv_sheets.keys()), name_sep), lines['Name'] )
+            if len( ad_type ) > 0:
+                sheet = kv_sheets[ad_type[0]][0] # 要处理的sheet名称
+            name_keywords = re.findall(r'{}'.format(  re_pattern_string ), lines['Name'] )
+            if name_keywords != previous_name_keywords:
+                cell_color_index += 1
+                cell_color = cell_colors[ cell_color_index % 2 ]
 
-        workbook.save( "{}/{}".format( path, result_file ))
+            if sheet == "Hosted Display":
+                display_row = self.save_display_sheet( workbook, lines, display_row, export_path, result_file, fill_bgcolor_and_str=1, fill_cell="Asset_File_Name", color=cell_color, fill_str=name_keywords )
+            elif sheet == "Hosted Video":
+                video_row = self.save_video_sheet( workbook, lines, video_row, export_path, result_file, fill_bgcolor_and_str=1, fill_cell="Asset_File_Name", color=cell_color, fill_str=name_keywords )
+            elif sheet == "Hosted Native":
+                native_row = self.save_native_sheet( workbook, lines, native_row, export_path, result_file, fill_bgcolor_and_str=1, fill_cell="Asset_File_Name", color=cell_color, fill_str=name_keywords )
+            else:
+                print( l_index, lines, results )
+                pass
+            previous_name_keywords = name_keywords
+        workbook.save("{}/{}".format( export_path, result_file) )
 
-
-        # workbook = openpyxl.Workbook()
-        # sheet = workbook.active
-        # sheet.title = "Hosted Display"
-        # data_title = ["Name (required)","Description", "Asset File Name (required)", "Clickthrough URL (required)", "Landing Page URL (required)", "Ad Server", "Creative Placement ID", "Third Party Tracking Tag 1", "Third Party Tracking Tag 2", "Third Party Tracking Tag 3", "Third Party Tracking URL 1", "Third Party Tracking URL 2", "Third Party Tracking URL 3", "Yahoo Offer Type", "Flight Start Date", "Flight End Date", "Flight Time Zone ID", "Political Candidate", "Mini Program Id", "Mini Program Path" ]
-        # col=1
-        # for t in data_title:
-        #     c = sheet.cell( row=1, column=col, value=t )
-        #     collen = len( str(t).encode() )
-        #     c.font = openpyxl.styles.Font( bold=True )
-        #     letter = get_column_letter( col )
-        #     sheet.column_dimensions[letter].width = collen * 1.2
-        #     col += 1
-        #
-        # # 写入正式数据
-        # for l_index, line in enumerate( self.results_list ):
-        #     col = 1
-        #     for col_index, e in enumerate( line ):
-        #         sheet.cell( row=2+l_index, column=col+col_index , value=e )
-        # result_file = name
-        #
-        # # 所有行自适应
-        #
-        #
-        # workbook.save( "{}/{}".format( path, result_file ) )
         return result_file
-
-
-

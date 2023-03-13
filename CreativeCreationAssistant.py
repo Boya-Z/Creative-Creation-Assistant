@@ -8,6 +8,8 @@ import static.Creative_Class as classCreative
 import static.Result_Class as classResult
 import tkinter as tk
 from tkinter import ttk
+import static.Miaozhen_Tracking_Class as miaozhen
+import static.Common_Class as commonClass
 
 NORM_FONT = ("Verdana", 10)
 import win32com.client as win32
@@ -20,6 +22,7 @@ campaignName = ""
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 app.add_template_filter(enumerate)
+app.add_template_filter(len, name='len')
 
 
 # app.add_template_filter( items )
@@ -83,7 +86,7 @@ def fileupload():
     context = {}
     file_list = []
     upload_path = session['upload_path']
-    context['uploaded_number'] = len( request.files )
+    context['uploaded_number'] = len(request.files)
     upload_files = request.files.getlist('files')
 
     for upload_file in upload_files:
@@ -104,30 +107,132 @@ def fileupload():
     session['creative_macros'] = creative_class.macros
     return render_template('CreativeSetting.html', file_list=file_list, macros=session['creative_macros'])
 
-@app.route('/skip_fileUpload', methods=["POST"] )
-def skip_fileUpload():
+
+@app.route('/skip_creative_upload', methods=["POST"])
+def skip_creative_upload():
+    session['skip_creative_upload'] = '1'
     creative_class = classCreative.Creative()
     creative_class.set_campaign_macro_value(session['campaignName'])
     session['creative_macros'] = creative_class.macros
-    return render_template('CreativeSetting.html', file_list=[], macros=session['creative_macros'] )
+    return render_template('CreativeSetting.html', file_list=[], macros=session['creative_macros'])
 
 
-@app.route('/miaozhenfileUpload', methods=["POST"] )
+@app.route('/miaozhenfileUpload', methods=["POST"])
 def miaozhenfileUpload():
-    import static.Miaozhen_Tracking_Class as miaozhen
     upload_path = session['upload_path']
     upload_file = request.files.getlist('upload_outside_file')[0]
-    upload_file_path = os.path.join( upload_path, upload_file.filename )
-    upload_file.save( upload_file_path )
-    miaozhen_obj = miaozhen.Miaozhen_Tracking( upload_file_path )
+    upload_file_path = os.path.join(upload_path, upload_file.filename)
+    upload_file.save(upload_file_path)
+    session['upload_file_path'] = upload_file_path
+    miaozhen_obj = miaozhen.Miaozhen_Tracking(upload_file_path)
     sheets = miaozhen_obj.get_sheets()
-    return render_template( 'please select excel sheet.html', sheets=sheets )
+    return render_template('please select excel sheet.html', sheets=sheets)
 
-@app.route('/selected_excel_sheet', methods=["POST"] )
+
+@app.route('/selected_excel_sheet', methods=["POST"])
 def selected_excel_sheet():
-    return True
+    if session['skip_creative_upload'] == "1":
+        selected_sheet_name = request.form.get("selected_radio")
+        session['selected_sheet_name'] = selected_sheet_name
 
-@app.route( '/sumbitted' )
+        # 开始解析秒针的监测文件内容
+        miaozhen_obj = miaozhen.Miaozhen_Tracking(session['upload_file_path'])
+        miaozhen_obj.select_sheet(selected_sheet_name)
+        miaozhen_obj.init_name_seperator( request.form["name_sep"] )
+        session["name_sep"] = request.form["name_sep"]
+        miaozhen_obj.generate_filter_pd()
+        common = commonClass.Common()
+        ( fixed_name_lists, filtered_name_struct_list, suspact_size_list, suspact_market_list) = miaozhen_obj.get_tracking_name_struct_set(
+            common.market, common.site )
+
+        #替换掉 秒针dataframes中的那么字段
+        miaozhen_obj.set_pd_value( col=2, data_list=fixed_name_lists )
+        miaozhen_file_content_lists = miaozhen_obj.get_list_from_filter_pd()
+
+        # 将修复的fixed_name写进export项目目录中
+        session['miaozhen_content_tmp'] = '{}miaozhen_file_content.tmp'.format(session["export_path"])
+        with open( session[ 'miaozhen_content_tmp' ], "w", encoding='utf-8') as fw:
+            json.dump( miaozhen_file_content_lists, fw )
+
+        '''
+        filtered_name_struct_list.format:
+        [
+            ['Hormel'], 
+            ['Beef Jerky'], 
+            ['Splash', 'Native Display', 'Display', 'Mobile Video'], 
+            ['RTB', 'iQIyi', 'Youku', 'Tencent'], 
+            ['Jingdong', 'Tianmao', 'Dingdong', 'Pupu'], 
+            ['GZ', 'SZ', 'BJ', 'SH'], 
+            ['600x300', 'Office 1080x2280', '960x540', 'Office_960x540', '640x360', '300x200', 'Office 1125x2436', '640x100', 'Office 720x1280', 'Camping_960x540', 'Office_1280x720', 'Office 640x960', '1280x720', '640x320', '960x640', 'Office 360x644', '480x320', 'Camping_1280x720', '1000x560'], 
+        ]
+        
+        recommand_size_list.format:
+        ['1280x720', '640x960', '1080x2280', '960x540', '720x1280', '1125x2436', '360x644']
+        '''
+
+        # recognise site
+        recommand_site_list = []
+        candidate_site_list = []
+        for index, filtered_name_struct in enumerate(filtered_name_struct_list):
+            recognised_sizes = list(set(filtered_name_struct).intersection( common.site ))
+            if len(recognised_sizes) > 0:
+                recommand_site_list +=  recognised_sizes  # 精准记录site name
+                candidate_site_list += filtered_name_struct_list[index] # 记录疑似含有site name的列
+        return render_template('init creative name.html',
+                               #name_struct_list = filtered_name_struct_list,
+                               recommand_size_list=suspact_size_list,
+                               recommand_site_list= set( recommand_site_list ),
+                               candidate_site_list= set( candidate_site_list ),
+                               recommand_market_list=suspact_market_list,
+                               sheet_name=selected_sheet_name,
+                               display_item_num=5)
+
+
+@app.route('/select_creative_name', methods=["POST"])
+def select_creative_name():
+    name_conversion_form = {}
+    if 'recommand_site' in request.form.keys():
+        name_conversion_form["recommand_site_list"] = request.form['recommand_site_list'].split(',')
+        name_conversion_form["candidate_site_list"] = request.form['candidate_site_list'].split(',')
+    if 'recommand_market' in request.form.keys():
+        name_conversion_form["recommand_market_list"] = request.form['recommand_market_list'].split(',')
+    if 'recommand_size' in request.form.keys():
+        name_conversion_form["recommand_size_list"] = request.form['recommand_size_list'].split(',')
+
+
+    r = generate_results_from_miaozhen_file( name_conversion_from = name_conversion_form )
+    return flask.send_file( r )
+
+
+def generate_results_from_miaozhen_file(name_conversion_from):
+    '''
+    输入参数 name_conversion_from 的格式：
+    {
+        "recommand_site_list"=[],
+        "candidate_site_list"=[],
+        "recommand_market_list"=[],
+        "recommand_size_list"=[]
+    }
+    '''
+
+    #with open( session[ 'miaozhen_content_tmp' ], "r", encoding='utf-8') as fr:
+
+
+    result_obj = classResult.MiaozhenResult()
+    with open( session[ 'miaozhen_content_tmp' ], "r", encoding='utf-8') as fr:
+        outside_data_set = json.load(fr)
+    result_file_name = result_obj.save_results_from_miaozhen_set( outside_data_set=outside_data_set,
+                                              export_path=session['export_path'],
+                                              result_file="{}_BulkCreativeImport_Result_v28.xlsx".format(
+                                                  session['campaignName']),
+                                              name_conversion_from=name_conversion_from,
+                                              name_sep=session['name_sep'] )
+
+    file_path = os.path.join(session['export_path'], result_file_name)
+    return file_path
+
+
+@app.route('/sumbitted')
 def get_sumbitted():
     return render_template('submitted.html', creative_rules=session['creative_rules'])
 
@@ -229,9 +334,10 @@ def exportXlsx():
         creative_rules = json.load(fo)
     resultObj.generate_results(creative_rules=creative_rules, macros=session['creative_macros'],
                                creative_path=session['upload_path'], export_path=session['export_path'])
-    result_file_name = resultObj.export_to_excel(path=session['export_path'],
-                                                 name="{}_BulkCreativeImport_Result_v28.xlsx".format(
-                                                     session['campaignName']))
+    result_file_name = resultObj.export_to_excel(
+        path=session['export_path'],
+        name="{}_BulkCreativeImport_Result_v28.xlsx".format(session['campaignName'])
+    )
     file_path = os.path.join(session['export_path'], result_file_name)
     return flask.send_file(file_path)
 
@@ -272,8 +378,14 @@ def download():
         download_name='{}_BulkCreativeImport_Result.zip'.format(session['campaignName'])
     )
 
+@app.route('/creative_upload/', methods=['POST'])
+def creative_upload():
+    return render_template('creative_upload.html')
+
 
 app.secret_key = 'tz.Feb.2023'
+app.jinja_env.trim_blocks = True
+app.jinja_env.lstrip_blocks = True
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='27804')
