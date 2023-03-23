@@ -8,14 +8,17 @@
     <script src="{{ url_for('static', filename='28adb9f300.js') }}" crossorigin="anonymous"></script>
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript" >
+    var Adgroup_list =[];
 <!--        function setRATrackURL()-->
 <!--        {-->
 <!--            e = document.getElementById('clickthrough_rule')-->
 <!--            e.value='https://trace.rtbasia.com/tkp?rta_k=fCKmfCn4oj&utm_campaign=##cpn##&utm_source=TTD&utm_content=%%AdGroupID%%_##cs##&utm_medium=%%Media%%&device=Mobile&imei=__IMEI__&mac=__MAC__&mac1=__MAC1__&idfa=__IDFA__&androidid=__ANDROIDID__&oaid=__OAID__&uid=%%TDID%%&custid1=__CUSTID1__&custid2=__CUSTID2__&os=__OS__&ua=__UA__&ts=__TS__&clientip=%%IP%%&caid=__CAID__'-->
 <!--        }-->
-        function combine_checkboxes(){
+        function combine_checkboxes_adgroup(){
             var files = document.getElementById( "files" )
             var files_string = ""
+            var adgroup = document.getElementById( "Ag_list" )
+            adgroup.value = Adgroup_list
             $('input:checkbox').each(function() {
                 if( $(this).is(':checked') ) {
 
@@ -47,6 +50,26 @@
 
         function hide_outside_tracking_file_div(){
             $('#outside_tracking_file_div').hidden();
+        }
+
+
+        function AddAdgroup() {
+          var input = document.getElementById('myInput');
+          var output = document.getElementById('Adgroup');
+          Adgroup_list.push(input.value)
+                output.innerHTML = 'Added Adgroup:<ul>'+Adgroup_list+'</ul>'
+        }
+
+        function DeleteAdgroup(){
+          var input = document.getElementById('myInput');
+          var output = document.getElementById('Adgroup');
+<!--          for (let i =0; i < Adgroup_list.length;i++ ){-->
+<!--            if (Adgroup_list[i] == input.value){-->
+<!--                Adgroup_list.splice(i, 1);-->
+<!--          }-->
+          Adgroup_list.pop()
+            output.innerHTML = 'Added Adgroup:<ul>'+Adgroup_list+'</ul>'
+
         }
 
     </script>
@@ -91,6 +114,18 @@
                 </tr>
                 {% endfor %}
             </table><br>
+<!--                 <p>Add value to Adgroup Macro(##ag##):</p>-->
+<!--                <input id="myInput" type="text" value="">-->
+<!--                <button id="myBtn" onclick="AddAdgroup()">Add</button>-->
+<!--                <div id="Adgroup" ></div>-->
+                <form method="post" id="add_Adgroup" action="/add_Adgroup" >
+                    <p>Add value to Adgroup Macro(##ag##):</p>
+                    <input id="myInput" type="text" value="">
+                    <button id="myBtn" onclick="AddAdgroup()">Add</button>
+<!--                    <input id="delInput" type="text" value="">-->
+                    <button id="myDel" onclick="DeleteAdgroup()">Delete the last Adgroup</button>
+                    <div id="Adgroup" ></div>
+                    </form>
             <a href="https://atlassian.thetradedesk.com/confluence/display/TSDKB/The+Trade+Desk+Macros" target="_blank">More TTD Macros.</a>
             </div>
             <form method="post" id="rule_setting_form" action="/add_rules" target="submitted">
@@ -109,11 +144,18 @@
                     {% endfor %}
                 </table>
                 <br>
-
+<!--                <tr>-->
+<!--                    <p>Add value to Adgroup Macro(##ag##):</p>-->
+<!--                    <input id="myInput" type="text" value="">-->
+<!--                    <button id="myBtn" onclick="AddAdgroup()">Add</button>-->
+<!--&lt;!&ndash;                    <input id="delInput" type="text" value="">&ndash;&gt;-->
+<!--                    <button id="myDel" onclick="DeleteAdgroup()">Delete the last Adgroup</button>-->
+<!--                    <div id="Adgroup" ></div>-->
+<!--                </tr>-->
                 <table  style="width:40%">
                     <tr>
                         <td style="padding: 10px 0 10px">Name:&nbsp
-                            <span class="mytooltip tooltip-effect-1"  style="z-index:-1">
+                            <span class="mytooltip tooltip-effect-1">
                             <span class="tooltip-item"><i class="fa-solid fa-circle-question"></i></span>
                             <span class="tooltip-content clearfix">
                             <img src="static/tooltipName.png">
@@ -142,11 +184,16 @@
                     <tr>
                         <td colspan="2" style="padding: 10px 0 10px">
                             <input type="hidden" value="{{cn}}">
-                            <input type="button" value="Add Rule" onclick="combine_checkboxes()">
+                            <input type="button" value="Add Rule" onclick="combine_checkboxes_adgroup()">
                         </td>
                     </tr>
                 </table>
+
                 <input type="hidden" name="files" id="files" value="">
+                <input type="hidden" name="Ag_list" id="Ag_list" value="">
+            </form>
+            <form style="padding: 10px 0 10px" method="post" id="rule_setting_form_delete" action="/delete_last_rule" target="submitted">
+                <input type="submit" value="remove the last added rule" >
             </form>
             <!--
             <table>

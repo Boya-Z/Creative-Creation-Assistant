@@ -29,6 +29,12 @@ class Creative():
             "key": "%%CampaignID%%",
             "value": "",
             "dynamic": True
+        },
+        "Adgroup": {
+            "desc": "Macro for multiple Adgroup upload at the same time",
+            "key": "##ag##",
+            "value": "",
+            "dynamic": True
         }
     }
 

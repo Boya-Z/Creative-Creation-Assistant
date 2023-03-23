@@ -1,19 +1,19 @@
 from zipfile import ZIP_DEFLATED
 import flask
 from flask import Flask, render_template, request, session, Response
-from datetime import timedelta
+# from datetime import timedelta
 import requests, json, socket
 import os, stat, filetype, zipfile
 import static.Creative_Class as classCreative
 import static.Result_Class as classResult
-import tkinter as tk
-from tkinter import ttk
+# import tkinter as tk
+# from tkinter import ttk
 import static.Miaozhen_Tracking_Class as miaozhen
 import static.Common_Class as commonClass
 
 NORM_FONT = ("Verdana", 10)
-import win32com.client as win32
-import pythoncom
+# import win32com.client as win32
+# import pythoncom
 
 campaignName = ""
 # basedir = os.path.abspath( os.path.dirname(__file__) )
@@ -138,21 +138,22 @@ def selected_excel_sheet():
         # 开始解析秒针的监测文件内容
         miaozhen_obj = miaozhen.Miaozhen_Tracking(session['upload_file_path'])
         miaozhen_obj.select_sheet(selected_sheet_name)
-        miaozhen_obj.init_name_seperator( request.form["name_sep"] )
+        miaozhen_obj.init_name_seperator(request.form["name_sep"])
         session["name_sep"] = request.form["name_sep"]
         miaozhen_obj.generate_filter_pd()
         common = commonClass.Common()
-        ( fixed_name_lists, filtered_name_struct_list, suspact_size_list, suspact_market_list) = miaozhen_obj.get_tracking_name_struct_set(
-            common.market, common.site )
+        (fixed_name_lists, filtered_name_struct_list, suspact_size_list,
+         suspact_market_list) = miaozhen_obj.get_tracking_name_struct_set(
+            common.market, common.site)
 
-        #替换掉 秒针dataframes中的那么字段
-        miaozhen_obj.set_pd_value( col=2, data_list=fixed_name_lists )
+        # 替换掉 秒针dataframes中的那么字段
+        miaozhen_obj.set_pd_value(col=2, data_list=fixed_name_lists)
         miaozhen_file_content_lists = miaozhen_obj.get_list_from_filter_pd()
 
         # 将修复的fixed_name写进export项目目录中
         session['miaozhen_content_tmp'] = '{}miaozhen_file_content.tmp'.format(session["export_path"])
-        with open( session[ 'miaozhen_content_tmp' ], "w", encoding='utf-8') as fw:
-            json.dump( miaozhen_file_content_lists, fw )
+        with open(session['miaozhen_content_tmp'], "w", encoding='utf-8') as fw:
+            json.dump(miaozhen_file_content_lists, fw)
 
         '''
         filtered_name_struct_list.format:
@@ -174,15 +175,15 @@ def selected_excel_sheet():
         recommand_site_list = []
         candidate_site_list = []
         for index, filtered_name_struct in enumerate(filtered_name_struct_list):
-            recognised_sizes = list(set(filtered_name_struct).intersection( common.site ))
+            recognised_sizes = list(set(filtered_name_struct).intersection(common.site))
             if len(recognised_sizes) > 0:
-                recommand_site_list +=  recognised_sizes  # 精准记录site name
-                candidate_site_list += filtered_name_struct_list[index] # 记录疑似含有site name的列
+                recommand_site_list += recognised_sizes  # 精准记录site name
+                candidate_site_list += filtered_name_struct_list[index]  # 记录疑似含有site name的列
         return render_template('init creative name.html',
-                               #name_struct_list = filtered_name_struct_list,
+                               # name_struct_list = filtered_name_struct_list,
                                recommand_size_list=suspact_size_list,
-                               recommand_site_list= set( recommand_site_list ),
-                               candidate_site_list= set( candidate_site_list ),
+                               recommand_site_list=set(recommand_site_list),
+                               candidate_site_list=set(candidate_site_list),
                                recommand_market_list=suspact_market_list,
                                sheet_name=selected_sheet_name,
                                display_item_num=5)
@@ -199,9 +200,8 @@ def select_creative_name():
     if 'recommand_size' in request.form.keys():
         name_conversion_form["recommand_size_list"] = request.form['recommand_size_list'].split(',')
 
-
-    r = generate_results_from_miaozhen_file( name_conversion_from = name_conversion_form )
-    return flask.send_file( r )
+    r = generate_results_from_miaozhen_file(name_conversion_from=name_conversion_form)
+    return flask.send_file(r)
 
 
 def generate_results_from_miaozhen_file(name_conversion_from):
@@ -215,18 +215,17 @@ def generate_results_from_miaozhen_file(name_conversion_from):
     }
     '''
 
-    #with open( session[ 'miaozhen_content_tmp' ], "r", encoding='utf-8') as fr:
-
+    # with open( session[ 'miaozhen_content_tmp' ], "r", encoding='utf-8') as fr:
 
     result_obj = classResult.MiaozhenResult()
-    with open( session[ 'miaozhen_content_tmp' ], "r", encoding='utf-8') as fr:
+    with open(session['miaozhen_content_tmp'], "r", encoding='utf-8') as fr:
         outside_data_set = json.load(fr)
-    result_file_name = result_obj.save_results_from_miaozhen_set( outside_data_set=outside_data_set,
-                                              export_path=session['export_path'],
-                                              result_file="{}_BulkCreativeImport_Result_v28.xlsx".format(
-                                                  session['campaignName']),
-                                              name_conversion_from=name_conversion_from,
-                                              name_sep=session['name_sep'] )
+    result_file_name = result_obj.save_results_from_miaozhen_set(outside_data_set=outside_data_set,
+                                                                 export_path=session['export_path'],
+                                                                 result_file="{}_BulkCreativeImport_Result_v28.xlsx".format(
+                                                                     session['campaignName']),
+                                                                 name_conversion_from=name_conversion_from,
+                                                                 name_sep=session['name_sep'])
 
     file_path = os.path.join(session['export_path'], result_file_name)
     return file_path
@@ -237,6 +236,19 @@ def get_sumbitted():
     return render_template('submitted.html', creative_rules=session['creative_rules'])
 
 
+@app.route('/add_Adgroup', methods=['POST'])
+def add_Adgroup():
+    if os.path.exists("{}rules.tmp".format(session['upload_path'])):
+        with open("{}rules.tmp".format(session['upload_path'])) as fo:
+            rules_list = json.load(fo)
+    else:
+        rules_list = []
+        session['Adgroup_add'] =[]
+    session['rules_file'] = "{}rules.tmp".format(session['upload_path'])
+
+    session['Adgroup_add'] = request.form.get('Ag_list').split(",")
+    return render_template('submitted.html', creative_rules=rules_list)
+
 @app.route('/add_rules', methods=['POST'])
 def add_rules():
     if os.path.exists("{}rules.tmp".format(session['upload_path'])):
@@ -245,6 +257,9 @@ def add_rules():
     else:
         rules_list = []
     session['rules_file'] = "{}rules.tmp".format(session['upload_path'])
+    # if len(request.form.get('Ag_list').split(",")) > 0 and session['Adgroup'] != request.form.get('Ag_list').split(","):
+    #     session['Adgroup'] = request.form.get('Ag_list').split(",")
+    #     return render_template('submitted.html', creative_rules=rules_list)
     rules_list.append(
         {
             "creative_files": request.form.get('files').split(","),
@@ -252,9 +267,11 @@ def add_rules():
             "Description": request.form.get('Description_rule'),
             "Asset_File_Name": request.form.get('Asset_File_Name_rule'),
             "clickthrough_url": request.form.get('clickthrough_rule'),
-            "landing_page_url": request.form.get('landing_page_rule')
+            "landing_page_url": request.form.get('landing_page_rule'),
+            "Adgroup_name": request.form.get('Ag_list').split(",")
         }
     )
+    print(rules_list)
     with open("{}rules.tmp".format(session['upload_path']), "w") as fo:
         json.dump(rules_list, fo)
     return render_template('submitted.html', creative_rules=rules_list)
@@ -288,16 +305,6 @@ def delete_last_rule():
 
     # session['creative_rules'].pop(-1)
     return render_template('submitted.html', creative_rules=rules_list)
-
-
-def popupmsg(msg):
-    popup = tk.Tk()
-    popup.wm_title("Reminder")
-    label = ttk.Label(popup, text=msg, font=NORM_FONT)
-    label.pack(side="top", fill="x", pady=10)
-    B1 = ttk.Button(popup, text="Ok", command=popup.destroy)
-    B1.pack()
-    popup.mainloop()
 
 
 @app.route('/output')
@@ -377,6 +384,7 @@ def download():
         as_attachment=True,
         download_name='{}_BulkCreativeImport_Result.zip'.format(session['campaignName'])
     )
+
 
 @app.route('/creative_upload/', methods=['POST'])
 def creative_upload():

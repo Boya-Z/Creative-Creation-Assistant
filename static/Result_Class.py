@@ -1,3 +1,6 @@
+from flask import request
+
+
 class Result():
     result_according_template = ""
     results_list = []
@@ -92,6 +95,14 @@ class Result():
                             landing_page_url = landing_page_url.replace("{}".format(macro_dict["key"]), Asset_File_Name)
                             Description = Description.replace("{}".format(macro_dict["key"]), Asset_File_Name)
                             Asset_File_Name = Asset_File_Name.replace("{}".format(macro_dict["key"]), Asset_File_Name)
+                        # if macro_obj == "Adgroup":
+                        #     AdgroupList = request.POST.get('Adgroup_list')
+                        #     # AdgroupList = []
+                        #     name = name.replace("{}".format(macro_dict["key"]), AdgroupList)
+                        #     clickthrough_url = clickthrough_url.replace("{}".format(macro_dict["key"]), AdgroupList)
+                        #     landing_page_url = landing_page_url.replace("{}".format(macro_dict["key"]), AdgroupList)
+                        #     Description = Description.replace("{}".format(macro_dict["key"]), AdgroupList)
+                        #     Asset_File_Name = Asset_File_Name.replace("{}".format(macro_dict["key"]), AdgroupList)
 
                 lines['Name'] = name  # name
                 lines['Description'] = Description  # Description
