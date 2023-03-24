@@ -236,19 +236,6 @@ def get_sumbitted():
     return render_template('submitted.html', creative_rules=session['creative_rules'])
 
 
-@app.route('/add_Adgroup', methods=['POST'])
-def add_Adgroup():
-    if os.path.exists("{}rules.tmp".format(session['upload_path'])):
-        with open("{}rules.tmp".format(session['upload_path'])) as fo:
-            rules_list = json.load(fo)
-    else:
-        rules_list = []
-        session['Adgroup_add'] =[]
-    session['rules_file'] = "{}rules.tmp".format(session['upload_path'])
-
-    session['Adgroup_add'] = request.form.get('Ag_list').split(",")
-    return render_template('submitted.html', creative_rules=rules_list)
-
 @app.route('/add_rules', methods=['POST'])
 def add_rules():
     if os.path.exists("{}rules.tmp".format(session['upload_path'])):
@@ -271,7 +258,7 @@ def add_rules():
             "Adgroup_name": request.form.get('Ag_list').split(",")
         }
     )
-    print(rules_list)
+    # print(rules_list)
     with open("{}rules.tmp".format(session['upload_path']), "w") as fo:
         json.dump(rules_list, fo)
     return render_template('submitted.html', creative_rules=rules_list)

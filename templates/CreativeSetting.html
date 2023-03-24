@@ -54,6 +54,7 @@
 
 
         function AddAdgroup() {
+
           var input = document.getElementById('myInput');
           var output = document.getElementById('Adgroup');
           Adgroup_list.push(input.value)
@@ -63,10 +64,6 @@
         function DeleteAdgroup(){
           var input = document.getElementById('myInput');
           var output = document.getElementById('Adgroup');
-<!--          for (let i =0; i < Adgroup_list.length;i++ ){-->
-<!--            if (Adgroup_list[i] == input.value){-->
-<!--                Adgroup_list.splice(i, 1);-->
-<!--          }-->
           Adgroup_list.pop()
             output.innerHTML = 'Added Adgroup:<ul>'+Adgroup_list+'</ul>'
 
@@ -114,18 +111,14 @@
                 </tr>
                 {% endfor %}
             </table><br>
-<!--                 <p>Add value to Adgroup Macro(##ag##):</p>-->
-<!--                <input id="myInput" type="text" value="">-->
-<!--                <button id="myBtn" onclick="AddAdgroup()">Add</button>-->
-<!--                <div id="Adgroup" ></div>-->
-                <form method="post" id="add_Adgroup" action="/add_Adgroup" >
+<!--                <form method="post" id="add_Adgroup" action="/add_Adgroup" >-->
                     <p>Add value to Adgroup Macro(##ag##):</p>
                     <input id="myInput" type="text" value="">
                     <button id="myBtn" onclick="AddAdgroup()">Add</button>
 <!--                    <input id="delInput" type="text" value="">-->
                     <button id="myDel" onclick="DeleteAdgroup()">Delete the last Adgroup</button>
                     <div id="Adgroup" ></div>
-                    </form>
+<!--                    </form>-->
             <a href="https://atlassian.thetradedesk.com/confluence/display/TSDKB/The+Trade+Desk+Macros" target="_blank">More TTD Macros.</a>
             </div>
             <form method="post" id="rule_setting_form" action="/add_rules" target="submitted">
@@ -144,14 +137,6 @@
                     {% endfor %}
                 </table>
                 <br>
-<!--                <tr>-->
-<!--                    <p>Add value to Adgroup Macro(##ag##):</p>-->
-<!--                    <input id="myInput" type="text" value="">-->
-<!--                    <button id="myBtn" onclick="AddAdgroup()">Add</button>-->
-<!--&lt;!&ndash;                    <input id="delInput" type="text" value="">&ndash;&gt;-->
-<!--                    <button id="myDel" onclick="DeleteAdgroup()">Delete the last Adgroup</button>-->
-<!--                    <div id="Adgroup" ></div>-->
-<!--                </tr>-->
                 <table  style="width:40%">
                     <tr>
                         <td style="padding: 10px 0 10px">Name:&nbsp
