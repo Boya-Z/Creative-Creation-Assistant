@@ -119,6 +119,7 @@ def skip_creative_upload():
 
 @app.route('/miaozhenfileUpload', methods=["POST"])
 def miaozhenfileUpload():
+    session['skip_creative_upload'] = "1"
     upload_path = session['upload_path']
     upload_file = request.files.getlist('upload_outside_file')[0]
     upload_file_path = os.path.join(upload_path, upload_file.filename)
