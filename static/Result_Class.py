@@ -36,6 +36,16 @@ class Result():
                 ClickUL:  https://us.ecoflow.com/?utm_source=tzjs&utm_medium=display&utm_campaign=controlled
                 landing：  https://us.ecoflow.com/
             }
+            ,      
+            {
+            "creative_files": request.form.get('files').split(","),
+            "name": request.form.get('creative_name_rule'),
+            "Description": request.form.get('Description_rule'),
+            "Asset_File_Name": request.form.get('Asset_File_Name_rule'),
+            "clickthrough_url": request.form.get('clickthrough_rule'),
+            "landing_page_url": request.form.get('landing_page_rule'),
+            "Adgroup_name": request.form.get('Ag_list').split(",")
+        }
         ]
         '''
 
@@ -49,20 +59,20 @@ class Result():
                                                                            creative_file_name)
                     # Asset_File_Name.replace( "{}".format( macros["creative_file_name"]["key"] ), creative_file_name )
                     # Asset_File_Name = rule_dict["Asset_File_Name"]
-                    if Asset_File_Name != creative_file_name:
-                        shutil.copy(os.path.join(creative_path, creative), os.path.join(os.path.abspath(export_path),
-                                                                                        "{}{}".format(Asset_File_Name,
-                                                                                                      creative_file_ext)))
-                        '''
-                        if os.path.exists( os.path.join( os.path.abspath( export_path ), Asset_File_Name)  ):
-                            os.remove( os.path.abspath( "{}{}".format( export_path, Asset_File_Name) ))
-                        os.rename( os.path.join(os.path.abspath( export_path ), creative), os.path.join( os.path.abspath( export_path ), Asset_File_Name))
-                        '''
-
-                        # flask.send_file(os.path.join(os.path.abspath( "./export" ), Asset_File_Name))
-                    else:
-                        shutil.copy(os.path.join(creative_path, creative),
-                                    os.path.join(os.path.abspath(export_path), creative))
+                    # if Asset_File_Name != creative_file_name:
+                    #     shutil.copy(os.path.join(creative_path, creative), os.path.join(os.path.abspath(export_path),
+                    #                                                                     "{}{}".format(Asset_File_Name,
+                    #                                                                                   creative_file_ext)))
+                    #     '''
+                    #     if os.path.exists( os.path.join( os.path.abspath( export_path ), Asset_File_Name)  ):
+                    #         os.remove( os.path.abspath( "{}{}".format( export_path, Asset_File_Name) ))
+                    #     os.rename( os.path.join(os.path.abspath( export_path ), creative), os.path.join( os.path.abspath( export_path ), Asset_File_Name))
+                    #     '''
+                    #
+                    #     # flask.send_file(os.path.join(os.path.abspath( "./export" ), Asset_File_Name))
+                    # else:
+                    #     shutil.copy(os.path.join(creative_path, creative),
+                    #                 os.path.join(os.path.abspath(export_path), creative))
                     lines = {}
                     name = rule_dict["name"]
                     clickthrough_url = rule_dict["clickthrough_url"]
@@ -104,7 +114,20 @@ class Result():
                             #     landing_page_url = landing_page_url.replace("{}".format(macro_dict["key"]), AdgroupList)
                             #     Description = Description.replace("{}".format(macro_dict["key"]), AdgroupList)
                             #     Asset_File_Name = Asset_File_Name.replace("{}".format(macro_dict["key"]), AdgroupList)
+                    if Asset_File_Name != creative_file_name:
+                        shutil.copy(os.path.join(creative_path, creative), os.path.join(os.path.abspath(export_path),
+                                                                                        "{}{}".format(Asset_File_Name,
+                                                                                                      creative_file_ext)))
+                        '''
+                        if os.path.exists( os.path.join( os.path.abspath( export_path ), Asset_File_Name)  ):
+                            os.remove( os.path.abspath( "{}{}".format( export_path, Asset_File_Name) ))
+                        os.rename( os.path.join(os.path.abspath( export_path ), creative), os.path.join( os.path.abspath( export_path ), Asset_File_Name))
+                        '''
 
+                        # flask.send_file(os.path.join(os.path.abspath( "./export" ), Asset_File_Name))
+                    else:
+                        shutil.copy(os.path.join(creative_path, creative),
+                                    os.path.join(os.path.abspath(export_path), creative))
                     lines['Name'] = name  # name
                     lines['Description'] = Description  # Description
                     lines['Asset_File_Name'] = Asset_File_Name  # Asset File Name (required)
@@ -121,21 +144,21 @@ class Result():
                             creative_file_name)
                         # Asset_File_Name.replace( "{}".format( macros["creative_file_name"]["key"] ), creative_file_name )
                         # Asset_File_Name = rule_dict["Asset_File_Name"]
-                        if Asset_File_Name != creative_file_name:
-                            shutil.copy(os.path.join(creative_path, creative),
-                                        os.path.join(os.path.abspath(export_path),
-                                                     "{}{}".format(Asset_File_Name,
-                                                                   creative_file_ext)))
-                            '''
-                            if os.path.exists( os.path.join( os.path.abspath( export_path ), Asset_File_Name)  ):
-                                os.remove( os.path.abspath( "{}{}".format( export_path, Asset_File_Name) ))
-                            os.rename( os.path.join(os.path.abspath( export_path ), creative), os.path.join( os.path.abspath( export_path ), Asset_File_Name))
-                            '''
-
-                            # flask.send_file(os.path.join(os.path.abspath( "./export" ), Asset_File_Name))
-                        else:
-                            shutil.copy(os.path.join(creative_path, creative),
-                                        os.path.join(os.path.abspath(export_path), creative))
+                        # if Asset_File_Name != creative_file_name:
+                        #     shutil.copy(os.path.join(creative_path, creative),
+                        #                 os.path.join(os.path.abspath(export_path),
+                        #                              "{}{}".format(Asset_File_Name,
+                        #                                            creative_file_ext)))
+                        #     '''
+                        #     if os.path.exists( os.path.join( os.path.abspath( export_path ), Asset_File_Name)  ):
+                        #         os.remove( os.path.abspath( "{}{}".format( export_path, Asset_File_Name) ))
+                        #     os.rename( os.path.join(os.path.abspath( export_path ), creative), os.path.join( os.path.abspath( export_path ), Asset_File_Name))
+                        #     '''
+                        #
+                        #     # flask.send_file(os.path.join(os.path.abspath( "./export" ), Asset_File_Name))
+                        # else:
+                        #     shutil.copy(os.path.join(creative_path, creative),
+                        #                 os.path.join(os.path.abspath(export_path), creative))
                         lines = {}
                         name = rule_dict["name"]
                         clickthrough_url = rule_dict["clickthrough_url"]
@@ -182,6 +205,22 @@ class Result():
                                     landing_page_url = landing_page_url.replace("{}".format(macro_dict["key"]), adgroup)
                                     Description = Description.replace("{}".format(macro_dict["key"]), adgroup)
                                     Asset_File_Name = Asset_File_Name.replace("{}".format(macro_dict["key"]), adgroup)
+
+                        if Asset_File_Name != creative_file_name:
+                            shutil.copy(os.path.join(creative_path, creative),
+                                        os.path.join(os.path.abspath(export_path),
+                                                     "{}{}".format(Asset_File_Name,
+                                                                   creative_file_ext)))
+                            '''
+                            if os.path.exists( os.path.join( os.path.abspath( export_path ), Asset_File_Name)  ):
+                                os.remove( os.path.abspath( "{}{}".format( export_path, Asset_File_Name) ))
+                            os.rename( os.path.join(os.path.abspath( export_path ), creative), os.path.join( os.path.abspath( export_path ), Asset_File_Name))
+                            '''
+
+                            # flask.send_file(os.path.join(os.path.abspath( "./export" ), Asset_File_Name))
+                        else:
+                            shutil.copy(os.path.join(creative_path, creative),
+                                        os.path.join(os.path.abspath(export_path), creative))
 
                         lines['Name'] = name  # name
                         lines['Description'] = Description  # Description
