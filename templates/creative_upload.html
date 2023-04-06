@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Creative Upload</title>
+    <script src="https://js.adsrvr.org/up_loader.1.1.0.js" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='ttd_universal_pixel.js') }}"></script>
+</head>
+<body>
+    <form method="post" action="/fileUpload" enctype="multipart/form-data">
+        <input type="file" id="myFile" name="files" multiple="multiple" onchange="updateList()" accept="image/*">
+        <br></br>
+
+        <div id="fileList" style="display:none" >
+        </div>
+        <br>
+        <a href="/empty" >
+            <button class="styled"type="button">clean all rules& files history</button>
+        </a>
+    </form>
+</body>
+</html>
