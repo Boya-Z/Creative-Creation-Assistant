@@ -78,7 +78,7 @@ class Result():
                     clickthrough_url = rule_dict["clickthrough_url"]
                     landing_page_url = rule_dict["landing_page_url"]
                     Description = rule_dict["Description"]
-                    Asset_File_Name = "{}{}".format(Asset_File_Name, creative_file_ext)
+                    # Asset_File_Name = "{}{}".format(Asset_File_Name, creative_file_ext)
                     for macro_obj, macro_dict in macros.items():
                         if macro_dict['dynamic'] == False:
                             name = name.replace("{}".format(macro_dict["key"]), macro_dict["value"])
@@ -114,10 +114,10 @@ class Result():
                             #     landing_page_url = landing_page_url.replace("{}".format(macro_dict["key"]), AdgroupList)
                             #     Description = Description.replace("{}".format(macro_dict["key"]), AdgroupList)
                             #     Asset_File_Name = Asset_File_Name.replace("{}".format(macro_dict["key"]), AdgroupList)
+                    Asset_File_Name = "{}{}".format(Asset_File_Name, creative_file_ext)
                     if Asset_File_Name != creative_file_name:
                         shutil.copy(os.path.join(creative_path, creative), os.path.join(os.path.abspath(export_path),
-                                                                                        "{}{}".format(Asset_File_Name,
-                                                                                                      creative_file_ext)))
+                                                                                     Asset_File_Name))
                         '''
                         if os.path.exists( os.path.join( os.path.abspath( export_path ), Asset_File_Name)  ):
                             os.remove( os.path.abspath( "{}{}".format( export_path, Asset_File_Name) ))
@@ -164,7 +164,7 @@ class Result():
                         clickthrough_url = rule_dict["clickthrough_url"]
                         landing_page_url = rule_dict["landing_page_url"]
                         Description = rule_dict["Description"]
-                        Asset_File_Name = "{}{}".format(Asset_File_Name, creative_file_ext)
+                        # Asset_File_Name = "{}{}".format(Asset_File_Name, creative_file_ext)
                         for macro_obj, macro_dict in macros.items():
                             if macro_dict['dynamic'] == False:
                                 name = name.replace("{}".format(macro_dict["key"]), macro_dict["value"])
@@ -205,12 +205,11 @@ class Result():
                                     landing_page_url = landing_page_url.replace("{}".format(macro_dict["key"]), adgroup)
                                     Description = Description.replace("{}".format(macro_dict["key"]), adgroup)
                                     Asset_File_Name = Asset_File_Name.replace("{}".format(macro_dict["key"]), adgroup)
-
+                        Asset_File_Name = "{}{}".format(Asset_File_Name, creative_file_ext)
                         if Asset_File_Name != creative_file_name:
                             shutil.copy(os.path.join(creative_path, creative),
                                         os.path.join(os.path.abspath(export_path),
-                                                     "{}{}".format(Asset_File_Name,
-                                                                   creative_file_ext)))
+                                                     Asset_File_Name))
                             '''
                             if os.path.exists( os.path.join( os.path.abspath( export_path ), Asset_File_Name)  ):
                                 os.remove( os.path.abspath( "{}{}".format( export_path, Asset_File_Name) ))
