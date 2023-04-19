@@ -149,12 +149,12 @@
 <!--                            <span class="tooltip-text">For column Name in template sheet</span>-->
                             </span>
                             </span>
-                            <br><input type="text" name="creative_name_rule" style="width:180px" value="##cpn##"></td>
+                            <br><input type="text" name="creative_name_rule" style="width:180px" value="##cpn##_##cfn##"></td>
 
                     </tr>
                     <tr>
                         <td style="padding: 10px 0 10px">Description:<br>
-                        <input type="text" name="Description_rule" style="width:50%" value="##cpn##_##cfn##"></td>
+                        <input type="text" name="Description_rule" style="width:50%" value="##cpn## ##ag##"></td>
                     </tr>
                     <tr>
                         <td style="padding: 10px 0 10px">Asset File Name(if you don't change, the same as file name):<br>
@@ -162,11 +162,11 @@
                     </tr>
                     <tr>
                         <td style="padding: 10px 0 10px">Clickthrough_url:<br>
-                        <input type="text" name="clickthrough_rule" id="clickthrough_rule" style="width:100%"  value="http://www.client.com/tkp?rta_k=fCKmfCn4oj&utm_campaign=##cpn##&utm_source=TTD&utm_content=%%AdGroupID%%_##cs##&utm_medium=%%Media%%&device=Mobile&imei=__IMEI__&mac=__MAC__&mac1=__MAC1__&idfa=__IDFA__&androidid=__ANDROIDID__&oaid=__OAID__&uid=%%TDID%%&custid1=__CUSTID1__&custid2=__CUSTID2__&os=__OS__&ua=__UA__&ts=__TS__&clientip=%%IP%%&caid=__CAID__"></td>
+                        <input type="text" name="clickthrough_rule" id="clickthrough_rule" style="width:100%"  value="?utm_source=TTD_%%TTD_CAMPAIGNID%%&utm_campaign=%%TTD_CAMPAIGNID%%&utm_medium=display&utm_content=%%TTD_ADGROUPID%%_%%TTD_CREATIVEID%%_%%TTD_SITE%%&utm_term=%%TTD_TDID%%"></td>
                     </tr>
                     <tr>
                         <td style="padding: 10px 0 10px">Landing_page_url:<br>
-                        <input type="text" name="landing_page_rule" style="width:100%"  value="http://www.client.com/"></td>
+                        <input type="text" name="landing_page_rule" style="width:100%"  value="provided by advertiser"></td>
                     </tr>
                     <tr>
                         <td colspan="2" style="padding: 10px 0 10px">
