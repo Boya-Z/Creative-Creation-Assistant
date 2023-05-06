@@ -318,7 +318,7 @@ class Result():
         display_row = 1
         video_row = 1
         native_row = 1
-        workbook = openpyxl.load_workbook('./BulkCreativeImportTemplate.v28.xlsx')
+        workbook = openpyxl.load_workbook('./static/BulkCreativeImportTemplate.v28.xlsx')
 
         if len( data_set ) == 0:
             data_set = self.results_list

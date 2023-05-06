@@ -11,6 +11,8 @@ import static.Result_Class as classResult
 import static.Miaozhen_Tracking_Class as miaozhen
 import static.Common_Class as commonClass
 
+import webview
+
 NORM_FONT = ("Verdana", 10)
 # import win32com.client as win32
 # import pythoncom
@@ -23,7 +25,7 @@ campaignName = ""
 app = Flask(__name__, template_folder='templates', static_folder='static')
 app.add_template_filter(enumerate)
 app.add_template_filter(len, name='len')
-
+window = webview.create_window('Creative Bulk Import Assistant',app)
 
 # app.add_template_filter( items )
 
@@ -384,5 +386,6 @@ app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='27804')
+    # app.run(host='0.0.0.0', port='27804')
     # app.run(host='127.0.0.1', port='80')
+    webview.start()
