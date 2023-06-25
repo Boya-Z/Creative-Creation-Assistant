@@ -14,8 +14,7 @@ import static.Common_Class as commonClass
 import webview
 
 NORM_FONT = ("Verdana", 10)
-# import win32com.client as win32
-# import pythoncom
+
 
 campaignName = ""
 # basedir = os.path.abspath( os.path.dirname(__file__) )
@@ -83,6 +82,7 @@ def chooseFile():
 @app.route('/fileUpload', methods=["POST"])
 def fileupload():
     from PIL import Image
+    import cv2
     # im = Image.open(file)
     # return im.size
     context = {}
@@ -90,24 +90,48 @@ def fileupload():
     upload_path = session['upload_path']
     context['uploaded_number'] = len(request.files)
     upload_files = request.files.getlist('files')
-
+    # upload_files = request.form.get('all_files')
+    # print(request.form.get('all_files'))
+    # print(request.files.getlist('all_files'))
+    # print(upload_files)
     for upload_file in upload_files:
         temp = []
         upload_file_path = os.path.join(upload_path, upload_file.filename)
         # 存储文件size
         upload_file.save(upload_file_path)
-        size = Image.open(upload_file_path).size
         kind = filetype.guess(upload_file_path)
-        temp.append(upload_file.filename)
-        temp.append(size[0])
-        temp.append(size[1])
-        temp.append(kind.extension)
-        temp.append(kind.mime)
-        file_list.append(temp)
+        if kind.mime.split('/')[0] == 'image':
+            size = Image.open(upload_file_path).size
+            temp.append(upload_file.filename)
+            temp.append(size[0])
+            temp.append(size[1])
+            temp.append(kind.extension)
+            temp.append(kind.mime)
+            file_list.append(temp)
+        elif kind.mime.split('/')[0] == 'video':
+            vid = cv2.VideoCapture(upload_file_path)
+            height = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
+            width = vid.get(cv2.CAP_PROP_FRAME_WIDTH)
+            temp.append(upload_file.filename)
+            temp.append(height)
+            temp.append(width)
+            temp.append(kind.extension)
+            temp.append(kind.mime)
+            file_list.append(temp)
+        else:
+            temp.append(upload_file.filename)
+            temp.append('N')
+            temp.append('N')
+            temp.append(kind.extension)
+            temp.append(kind.mime)
+            file_list.append(temp)
     creative_class = classCreative.Creative()
     creative_class.set_campaign_macro_value(session['campaignName'])
     session['creative_macros'] = creative_class.macros
-    return render_template('CreativeSetting.html', file_list=file_list, macros=session['creative_macros'])
+    return render_template('CreativeSetting.html', file_list=file_list, macros=session['creative_macros']
+                           , creative_type=['Hosted Display','Hosted Native','Hosted Video'
+                                            ,'Hosted Audio','Hosted Flash','Hosted HTML5','Third Party Display'
+                                            ,'Third Party Video', 'Third Party Audio'])
 
 
 @app.route('/skip_creative_upload', methods=["POST"])
@@ -241,31 +265,58 @@ def get_sumbitted():
 
 @app.route('/add_rules', methods=['POST'])
 def add_rules():
+
     if os.path.exists("{}rules.tmp".format(session['upload_path'])):
         with open("{}rules.tmp".format(session['upload_path'])) as fo:
             rules_list = json.load(fo)
     else:
         rules_list = []
+
     session['rules_file'] = "{}rules.tmp".format(session['upload_path'])
     # if len(request.form.get('Ag_list').split(",")) > 0 and session['Adgroup'] != request.form.get('Ag_list').split(","):
     #     session['Adgroup'] = request.form.get('Ag_list').split(",")
     #     return render_template('submitted.html', creative_rules=rules_list)
-    rules_list.append(
-        {
-            "creative_files": request.form.get('files').split(","),
-            "name": request.form.get('creative_name_rule'),
-            "Description": request.form.get('Description_rule'),
-            "Asset_File_Name": request.form.get('Asset_File_Name_rule'),
-            "clickthrough_url": request.form.get('clickthrough_rule'),
-            "landing_page_url": request.form.get('landing_page_rule'),
-            "Adgroup_name": request.form.get('Ag_list').split(",")
-        }
-    )
-    # print(rules_list)
+
+    # creative_type=['Hosted Display','Hosted Native','Hosted Video','Hosted Audio']
+    types = request.form.get('creative_type')
+    print(str(types))
+    print(request.form.get('files').split(","))
+    if request.form['add_rule'] == 'Change Type':
+    # if "not submit form" in request.form:
+        pass
+    elif request.form['add_rule'] == 'Add Rule':
+        rules_list.append(
+            {
+                "creative_type":request.form.get('creative_type'),
+                "creative_files": request.form.get('files').split(";"),
+                "name": request.form.get('creative_name_rule'),
+                "Description": request.form.get('Description_rule'),
+                "Asset_File_Name": request.form.get('Asset_File_Name_rule'),
+                "clickthrough_url": request.form.get('clickthrough_rule'),
+                "landing_page_url": request.form.get('landing_page_rule'),
+                "Impression_Tracking_url": request.form.get('Impression_Tracking_url'),
+                "Native_Short_Title": request.form.get('Native_Short_Title'),
+                "Native_Long_Title": request.form.get('Native_Long_Title'),
+                "Native_Short_Description": request.form.get('Native_Short_Description'),
+                "Native_Long_Description": request.form.get('Native_Long_Description'),
+                "Sponsor": request.form.get('Sponsor'),
+                "Click_Tracking_Parameter": request.form.get('Click_Tracking_Parameter'),
+                "Width": request.form.get('Width'),
+                "Height": request.form.get('Height'),
+                "AdTag": request.form.get('AdTag'),
+                "VAST_XML_URL": request.form.get('VAST_XML_URL'),
+                "Adgroup_name": request.form.get('Ag_list').split(",")
+            }
+        )
+    print(rules_list)
     with open("{}rules.tmp".format(session['upload_path']), "w") as fo:
         json.dump(rules_list, fo)
     return render_template('submitted.html', creative_rules=rules_list)
 
+# @app.route('/creative_type', methods=['GET'])
+# def dropdown():
+#     creative_type=['video','display']
+#     return render_template('submitted.html', creative_type=creative_type)
 
 @app.route('/delete_last_rule', methods=['POST'])
 def delete_last_rule():
@@ -387,5 +438,5 @@ app.jinja_env.lstrip_blocks = True
 
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', port='27804')
-    # app.run(host='127.0.0.1', port='80')
-    webview.start()
+    app.run(host='127.0.0.1', port='80')
+    # webview.start()

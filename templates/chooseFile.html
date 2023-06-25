@@ -28,17 +28,35 @@
                 }
                 return false;
             }
-
+<!--             var cur_file=[]-->
+<!--             var all_children = "";-->
              function updateList() {
                 var input = document.getElementById('myFile');
+                var new_input = document.getElementById('add');
+
+<!--                var all_file_list =document.getElementById('all_files');-->
+<!--                for (let i = 0; i < new_input.files.length; i++){-->
+<!--                    cur_file.push(new_input.files.item(i));-->
+
+<!--                }-->
+
+<!--                all_file_list.value=cur_file-->
+
                 var output = document.getElementById('fileList');
                 var children = "";
                 for (var i = 0; i < input.files.length; ++i) {
                     children += '<li>' + '<a>File Name: </a>' + input.files.item(i).name
                         + '<a> &nbsp;&nbsp;File Type: </a>' + input.files.item(i).type  + '</li>';
                 }
+<!--                 for (var i = 0; i < new_input.files.length; ++i) {-->
+<!--                    children += '<li>' + '<a>File Name: </a>' + new_input.files.item(i).name-->
+<!--                        + '<a> &nbsp;&nbsp;File Type: </a>' + new_input.files.item(i).type  + '</li>';-->
+<!--                }-->
+<!--                all_children=all_children+children-->
+
                 var next_div = document.getElementById('next_div');
                 output.innerHTML = 'Updated files:<ul>'+children+'</ul>'+'<input type="submit" value="Next">';
+<!--                output.innerHTML = 'Updated files:<ul>'+all_children+'</ul>'+'<input type="submit" value="Next">';-->
                 output.style.display = ""
              }
 
@@ -81,10 +99,17 @@
         <div class="header">Welcome to Tracking Creation Assistant.</div>
         <div class="info">
             <div style="border-radius: 25px; top:20px; left: 20px; border: solid 1px #888; padding: 20px 20px; width: 45%">
-                <p>Upload files and setup templates</p><br>
+                <p>Upload files to set up templates</p><br>
                 <form method="post" action="/fileUpload" enctype="multipart/form-data">
-                    <input type="file" id="myFile" name="files" multiple="multiple" onchange="updateList()" accept="image/*">
+                    <input type="file" id="myFile" name="files" multiple="multiple" onchange="updateList()" accept="image/*,video/*,audio/*">
+
                     <br></br>
+<!--                    <p>Add more files</p><br>-->
+<!--                    <input type="file"  id="add" name="add" multiple="multiple" onchange="updateList()" accept="image/*,video/*,audio/*">-->
+<!--                    <br>-->
+<!--                    <label for="all_files" >Add Creative Files</label>-->
+<!--                    <input type="hidden" name="all_files" id="all_files"  value="">-->
+<!--                   type="hidden"  style="visibility:hidden"-->
 
                     <div id="fileList" style="display:none" >
                     </div>

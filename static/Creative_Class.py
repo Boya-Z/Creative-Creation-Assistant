@@ -18,6 +18,18 @@ class Creative():
             "value": "*depend on uploaded creative files",
             "dynamic": True
         },
+        "Creative_width": {
+            "desc": "Creative Width, i.e. 300",
+            "key": "##w##",
+            "value": "*depend on uploaded creative files",
+            "dynamic": True
+        },
+        "Creative_height": {
+            "desc": "Creative Height, i.e. 250",
+            "key": "##h##",
+            "value": "*depend on uploaded creative files",
+            "dynamic": True
+        },
         "TTD AdgroupID": {
             "desc": "Macro in TTD",
             "key": "%%AdGroupID%%",

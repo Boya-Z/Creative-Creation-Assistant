@@ -11,12 +11,69 @@
 <!--<div class="wrapper">-->
     <div class="main_content">
         <div class="info">
-            <p style="padding: 10px 0 10px">Excel Preview:</p>
-            <table style="width:100%" class="content-table1">
-
+            <p style="padding: 10px 0 10px">Hosted Display Excel Preview:</p>
+            <table style="width:100%" name='table1' class="content-table1" >
                 <thead>
                 <tr>
 <!--                    <td align="center">name_rule</td>-->
+                    <td>name_rule</td>
+                    <td>Description_rule</td>
+                    <td>Asset_File_Name_rule</td>
+                    <td>Clickthrough_url</td>
+                    <td>Landing_url</td>
+                </tr>
+                <tbody>
+                {% for rule in creative_rules %}
+                    {% if rule["creative_type"] == 'Hosted Display'%}
+                        <tr>
+                            <td>{{rule["name"]}}</td>
+                            <td>{{rule["Description"]}}</td>
+                            <td>{{rule["Asset_File_Name"]}}</td>
+                            <td>{{rule["clickthrough_url"]}}</td>
+                            <td>{{rule["landing_page_url"]}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+            <p style="padding: 10px 0 10px">Hosted Native Excel Preview:</p>
+            <table style="width:100%" name='table2' class="content-table1" >
+                <thead>
+                <tr>
+                    <td>name_rule</td>
+                    <td>Description_rule</td>
+                    <td>Asset_File_Name_rule</td>
+                    <td>Clickthrough_url</td>
+                    <td>Landing_url</td>
+                    <!--hosted native-->
+                    <td>Native_Short_Title</td>
+                    <td>Native_Long_Title</td>
+                    <td>Native_Short_Description</td>
+                    <td>Native_Long_Description</td>
+                    <td>Sponsor</td>
+                </tr>
+                <tbody>
+                {% for rule in creative_rules%}
+                    {% if rule["creative_type"] == 'Hosted Native'%}
+                        <tr>
+                            <td>{{rule["name"]}}</td>
+                            <td>{{rule["Description"]}}</td>
+                            <td>{{rule["Asset_File_Name"]}}</td>
+                            <td>{{rule["clickthrough_url"]}}</td>
+                            <td>{{rule["landing_page_url"]}}</td>
+                            <!--hosted native-->
+                            <td>{{rule["Native_Short_Title"]}}</td>
+                            <td>{{rule["Native_Long_Title"]}}</td>
+                            <td>{{rule["Native_Short_Description"]}}</td>
+                            <td>{{rule["Native_Long_Description"]}}</td>
+                            <td>{{rule["Sponsor"]}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+            <p style="padding: 10px 0 10px">Hosted Video Excel Preview:</p>
+            <table style="width:100%" name='table3' class="content-table1" >
+                <thead>
+                <tr>
                     <td>name_rule</td>
                     <td>Description_rule</td>
                     <td>Asset_File_Name_rule</td>
@@ -24,28 +81,168 @@
                     <td>landing_url</td>
                 </tr>
                 <tbody>
-                {% for rule in creative_rules %}
-                    <tr>
-                        <td>{{rule["name"]}}</td>
-                        <td>{{rule["Description"]}}</td>
-                        <!--
-                        <td>
-                            {% for f in rule["creative_files"] %}
-                            {{f}} (original name,might be changed in excel)
-                            {% endfor %}
-                        </td>
-                        -->
-                        <td>{{rule["Asset_File_Name"]}}</td>
-                        <td>{{rule["clickthrough_url"]}}</td>
-                        <td>{{rule["landing_page_url"]}}</td>
-                    </tr>
+                {% for rule in creative_rules%}
+                    {% if rule["creative_type"] == 'Hosted Video'%}
+                        <tr>
+                            <td>{{rule["name"]}}</td>
+                            <td>{{rule["Description"]}}</td>
+                            <td>{{rule["Asset_File_Name"]}}</td>
+                            <td>{{rule["clickthrough_url"]}}</td>
+                            <td>{{rule["landing_page_url"]}}</td>
+                        </tr>
+                    {% endif %}
                 {% endfor %}
             </table>
+            <p style="padding: 10px 0 10px">Hosted Audio Excel Preview:</p>
+            <table style="width:100%" name='table4' class="content-table1" >
+                <thead>
+                <tr>
+                    <td>name_rule</td>
+                    <td>Description_rule</td>
+                    <td>Asset_File_Name_rule</td>
+                    <td>Clickthrough_url</td>
+                    <td>Landing_url</td>
+                </tr>
+                <tbody>
+                {% for rule in creative_rules%}
+                    {% if rule["creative_type"] == 'Hosted Audio'%}
+                        <tr>
+                            <td>{{rule["name"]}}</td>
+                            <td>{{rule["Description"]}}</td>
+                            <td>{{rule["Asset_File_Name"]}}</td>
+                            <td>{{rule["clickthrough_url"]}}</td>
+                            <td>{{rule["landing_page_url"]}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+            <p style="padding: 10px 0 10px">Hosted Flash Excel Preview:</p>
+            <table style="width:100%" name='table4' class="content-table1" >
+                <thead>
+                <tr>
+                    <td>name_rule</td>
+                    <td>Description_rule</td>
+                    <td>Asset_File_Name_rule</td>
+                    <td>Clickthrough_url</td>
+                    <td>Landing_url</td>
+                    <td>Click Tracking Parameter</td>
+                </tr>
+                <tbody>
+                {% for rule in creative_rules%}
+                    {% if rule["creative_type"] == 'Hosted Flash'%}
+                        <tr>
+                            <td>{{rule["name"]}}</td>
+                            <td>{{rule["Description"]}}</td>
+                            <td>{{rule["Asset_File_Name"]}}</td>
+                            <td>{{rule["clickthrough_url"]}}</td>
+                            <td>{{rule["landing_page_url"]}}</td>
+                            <td>{{rule["Click_Tracking_Parameter"]}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+            <p style="padding: 10px 0 10px">Hosted HTML5 Excel Preview:</p>
+            <table style="width:100%" name='table4' class="content-table1" >
+                <thead>
+                <tr>
+                    <td>name_rule</td>
+                    <td>Description_rule</td>
+                    <td>Width_rule</td>
+                    <td>Height_rule</td>
+                    <td>Asset_File_Name_rule</td>
+                    <td>Clickthrough_url</td>
+                    <td>Landing_url</td>
+                    <td>Click Tracking Parameter</td>
+                </tr>
+                <tbody>
+                {% for rule in creative_rules%}
+                    {% if rule["creative_type"] == 'Hosted HTML5'%}
+                        <tr>
+                            <td>{{rule["name"]}}</td>
+                            <td>{{rule["Description"]}}</td>
+                            <td>{{rule["Width"]}}</td>
+                            <td>{{rule["Height"]}}</td>
+                            <td>{{rule["Asset_File_Name"]}}</td>
+                            <td>{{rule["clickthrough_url"]}}</td>
+                            <td>{{rule["landing_page_url"]}}</td>
+                            <td>{{rule["Click_Tracking_Parameter"]}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+            <p style="padding: 10px 0 10px">Third Party Display Excel Preview:</p>
+            <table style="width:100%" name='table4' class="content-table1" >
+                <thead>
+                <tr>
+                    <td>name_rule</td>
+                    <td>Description_rule</td>
+                    <td>Width_rule</td>
+                    <td>Height_rule</td>
+                    <td>AdTag_rule</td>
+                    <td>Landing_url</td>
+                </tr>
+                <tbody>
+                {% for rule in creative_rules%}
+                    {% if rule["creative_type"] == 'Third Party Display'%}
+                        <tr>
+                            <td>{{rule["name"]}}</td>
+                            <td>{{rule["Description"]}}</td>
+                            <td>{{rule["Width"]}}</td>
+                            <td>{{rule["Height"]}}</td>
+                            <td>{{rule["AdTag"]}}</td>
+                            <td>{{rule["landing_page_url"]}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+            <p style="padding: 10px 0 10px">Third Party Video Excel Preview:</p>
+            <table style="width:100%" name='table4' class="content-table1" >
+                <thead>
+                <tr>
+                    <td>name_rule</td>
+                    <td>Description_rule</td>
+                    <td>VAST_XML_rule</td>
+                    <td>Landing_url</td>
+                </tr>
+                <tbody>
+                {% for rule in creative_rules%}
+                    {% if rule["creative_type"] == 'Third Party Video'%}
+                        <tr>
+                            <td>{{rule["name"]}}</td>
+                            <td>{{rule["Description"]}}</td>
+                            <td>{{rule["VAST_XML_URL"]}}</td>
+                            <td>{{rule["landing_page_url"]}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+            <p style="padding: 10px 0 10px">Third Party Audio Excel Preview:</p>
+            <table style="width:100%" name='table4' class="content-table1" >
+                <thead>
+                <tr>
+                    <td>name_rule</td>
+                    <td>Description_rule</td>
+                    <td>VAST_XML_rule</td>
+                    <td>Landing_url</td>
+                </tr>
+                <tbody>
+                {% for rule in creative_rules%}
+                    {% if rule["creative_type"] == 'Third Party Audio'%}
+                        <tr>
+                            <td>{{rule["name"]}}</td>
+                            <td>{{rule["Description"]}}</td>
+                            <td>{{rule["VAST_XML_URL"]}}</td>
+                            <td>{{rule["landing_page_url"]}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+
         </div>
 
     <p>
     <form  id="output_excel" action="/output" style="padding: 10px 0 10px" >
-         <input type="submit" value="Step1: Download Results" >
+         <input type="submit" value="Step1: Download Results {{creative_type}}" >
     </form>
 <!--    <a href="/output" target="_blank">Step1: Download Results</a>-->
 

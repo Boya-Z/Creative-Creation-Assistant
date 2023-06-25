@@ -16,6 +16,112 @@
 <!--            e = document.getElementById('clickthrough_rule')-->
 <!--            e.value='https://trace.rtbasia.com/tkp?rta_k=fCKmfCn4oj&utm_campaign=##cpn##&utm_source=TTD&utm_content=%%AdGroupID%%_##cs##&utm_medium=%%Media%%&device=Mobile&imei=__IMEI__&mac=__MAC__&mac1=__MAC1__&idfa=__IDFA__&androidid=__ANDROIDID__&oaid=__OAID__&uid=%%TDID%%&custid1=__CUSTID1__&custid2=__CUSTID2__&os=__OS__&ua=__UA__&ts=__TS__&clientip=%%IP%%&caid=__CAID__'-->
 <!--        }-->
+
+        function change_type(){
+            var type = document.getElementById('creative_type');
+            if (type.value != "Hosted Native"){
+                document.getElementById('c').style.display = 'initial';
+                document.getElementById('n1').style.display = 'none';
+                document.getElementById('n2').style.display = 'none';
+                document.getElementById('n3').style.display = 'none';
+                document.getElementById('n4').style.display = 'none';
+                document.getElementById('n5').style.display = 'none';
+                document.getElementById('n6').style.display = 'none';
+                document.getElementById('n7').style.display = 'none';
+                document.getElementById('n8').style.display = 'none';
+            }
+            else if (type.value == "Hosted Native"){
+                document.getElementById('c').style.display = 'initial';
+                document.getElementById('i').style.display = 'initial';
+                document.getElementById('n1').style.display = 'initial';
+                document.getElementById('n2').style.display = 'initial';
+                document.getElementById('n3').style.display = 'initial';
+                document.getElementById('n4').style.display = 'initial';
+                document.getElementById('n5').style.display = 'initial';
+                document.getElementById('n6').style.display = 'none';
+                document.getElementById('n7').style.display = 'none';
+                document.getElementById('n8').style.display = 'none';
+                document.getElementById('n10').style.display = 'none';
+                return;
+            }
+
+            if (type.value == "Hosted Flash"){
+                document.getElementById('i').style.display = 'none';
+                document.getElementById('a').style.display = 'initial';
+                document.getElementById('c').style.display = 'initial';
+                document.getElementById('n6').style.display = 'initial';
+                document.getElementById('n7').style.display = 'none';
+                document.getElementById('n8').style.display = 'none';
+                document.getElementById('n9').style.display = 'none';
+                document.getElementById('n10').style.display = 'none';
+                return;
+            }
+            if (type.value == "Hosted HTML5"){
+                document.getElementById('i').style.display = 'none';
+                document.getElementById('a').style.display = 'initial';
+                document.getElementById('c').style.display = 'initial';
+                document.getElementById('n6').style.display = 'initial';
+                document.getElementById('n7').style.display = 'initial';
+                document.getElementById('n8').style.display = 'initial';
+                document.getElementById('n9').style.display = 'none';
+                document.getElementById('n10').style.display = 'none';
+                return;
+            }
+            if (type.value == "Third Party Display"){
+                document.getElementById('i').style.display = 'none';
+                document.getElementById('n6').style.display = 'none';
+                document.getElementById('n7').style.display = 'initial';
+                document.getElementById('n8').style.display = 'initial';
+                document.getElementById('n9').style.display = 'initial';
+                document.getElementById('n10').style.display = 'none';
+                document.getElementById('a').style.display = 'none';
+                document.getElementById('c').style.display = 'none';
+                return;
+            }
+            if (type.value == "Third Party Video"){
+                document.getElementById('i').style.display = 'none';
+                document.getElementById('n6').style.display = 'none';
+                document.getElementById('n7').style.display = 'none';
+                document.getElementById('n8').style.display = 'none';
+                document.getElementById('n9').style.display = 'none';
+                document.getElementById('n10').style.display = 'initial';
+                document.getElementById('a').style.display = 'none';
+                document.getElementById('c').style.display = 'none';
+                return;
+            }
+            else if (type.value == "Third Party Audio"){
+                document.getElementById('i').style.display = 'none';
+                document.getElementById('n6').style.display = 'none';
+                document.getElementById('n7').style.display = 'none';
+                document.getElementById('n8').style.display = 'none';
+                document.getElementById('n9').style.display = 'none';
+                document.getElementById('n10').style.display = 'initial';
+                document.getElementById('a').style.display = 'none';
+                document.getElementById('c').style.display = 'none';
+                return;
+            }
+            if (type.value == "Hosted Display"){
+                document.getElementById('i').style.display = 'initial';
+                document.getElementById('n7').style.display = 'none';
+                document.getElementById('n8').style.display = 'none';
+                return;
+            }
+            if (type.value == "Hosted Video"){
+                document.getElementById('i').style.display = 'initial';
+                document.getElementById('n7').style.display = 'none';
+                document.getElementById('n8').style.display = 'none';
+                return;
+            }
+            if (type.value == "Hosted Audio"){
+                document.getElementById('i').style.display = 'initial';
+                document.getElementById('n7').style.display = 'none';
+                document.getElementById('n8').style.display = 'none';
+                return;
+            }
+            ;
+
+
+        }
         function combine_checkboxes_adgroup(){
             var files = document.getElementById( "files" )
             var files_string = ""
@@ -28,11 +134,14 @@
                         files_string = $(this).val()
                     }
                     else {
-                        files_string = files_string + "," + $(this).val()
+                        files_string = files_string + ";" + $(this).val()
                     }
                 }
             });
             files.value = files_string
+
+            var impURL  = document.getElementById("imp_url")
+
             $('#rule_setting_form').submit()
 
             function highlightSize(s) {
@@ -137,6 +246,17 @@
                         <td>{{f[4]}}</td>
                     </tr>
                     {% endfor %}
+                    <tr>
+                    Creative type:<select name= creative_type id="creative_type" >
+                        {% for creative in creative_type %}
+                        <option value="{{creative}}" >{{creative}}</option>
+                        {% endfor %}
+                    </select>
+                        <input type="submit" name="add_rule" value="Change Type" onclick="change_type()" >
+<!--                    <input type="hidden" name="types" id="types" value="">-->
+
+                    </tr>
+
                 </table>
                 <br>
                 <table  style="width:40%">
@@ -156,22 +276,70 @@
                         <td style="padding: 10px 0 10px">Description:<br>
                         <input type="text" name="Description_rule" style="width:50%" value="##cpn## ##ag##"></td>
                     </tr>
+                    <!--html5 3rd display-->
+                    <tr id = 'n7'  style="display:none">
+                        <td style="padding: 10px 0 10px">Width:<br>
+                        <input type="text" name="Width" id="Width" style="width:100%"  value="##w##"></td>
+                    </tr>
+                    <tr id = 'n8'  style="display:none">
+                        <td style="padding: 10px 0 10px">Height:<br>
+                        <input type="text" name="Height" id="Height" style="width:100%"  value="##h##"></td>
+                    </tr>
                     <tr>
-                        <td style="padding: 10px 0 10px">Asset File Name(if you don't change, the same as file name):<br>
+                        <td id = 'n9'  style="display:none;padding: 10px 0 10px">AdTag:<br>
+                        <input type="text" name="AdTag" id="AdTag" style="width:100%"  value="provided by advertiser"></td>
+                    </tr>
+                    <!-- 3rd Video Audio-->
+                    <tr>
+                        <td style="padding: 10px 0 10px;display:none" id = 'n10'>VAST XML URL:<br>
+                        <input type="text" name="VAST_XML_URL" id="VAST_XML_URL" style="width:100%"  value="provided by advertiser"></td>
+                    </tr>
+                    <tr>
+                        <td  id='a' style="padding: 10px 0 10px">Asset File Name(if you don't change, the same as file name):<br>
                         <input type="text" name="Asset_File_Name_rule" style="width:50%" value="##cfn##"></td>
                     </tr>
                     <tr>
-                        <td style="padding: 10px 0 10px">Clickthrough_url:<br>
-                        <input type="text" name="clickthrough_rule" id="clickthrough_rule" style="width:100%"  value="?utm_source=TTD_%%TTD_CAMPAIGNID%%&utm_campaign=%%TTD_CAMPAIGNID%%&utm_medium=display&utm_content=%%TTD_ADGROUPID%%_%%TTD_CREATIVEID%%_%%TTD_SITE%%&utm_term=%%TTD_TDID%%"></td>
+                        <td id='c' style="padding: 10px 0 10px">Clickthrough_url:<br>
+                        <input type="text" name="clickthrough_rule" style="width:100%"  value="?utm_source=TTD_%%TTD_CAMPAIGNID%%&utm_campaign=%%TTD_CAMPAIGNID%%&utm_medium=display&utm_content=%%TTD_ADGROUPID%%_%%TTD_CREATIVEID%%_%%TTD_SITE%%&utm_term=%%TTD_TDID%%"></td>
                     </tr>
                     <tr>
                         <td style="padding: 10px 0 10px">Landing_page_url:<br>
                         <input type="text" name="landing_page_rule" style="width:100%"  value="provided by advertiser"></td>
                     </tr>
+                    <!--native-->
+                    <tr id = 'n1'  style="display:none">
+                        <td style="padding: 10px 0 10px">Native_Short_Title:<br>
+                        <input type="text" name="Native_Short_Title" id="Native_Short_Title" style="width:100%"  value="provided by advertiser"></td>
+                    </tr>
+                    <tr id = 'n2'  style="display:none">
+                        <td style="padding: 10px 0 10px">Native_Long_Title:<br>
+                        <input type="text" name="Native_Long_Title" id="Native_Long_Title" style="width:100%"  value="provided by advertiser"></td>
+                    </tr>
+                    <tr id = 'n3'  style="display:none">
+                        <td style="padding: 10px 0 10px">Native_Short_Description:<br>
+                        <input type="text" name="Native_Short_Description" id="Native_Short_Description" style="width:100%"  value="provided by advertiser"></td>
+                    </tr>
+                    <tr  id = 'n4'  style="display:none">
+                        <td style="padding: 10px 0 10px">Native_Long_Description:<br>
+                        <input type="text" name="Native_Long_Description" id ="Native_Long_Description" style="width:100%"  value="provided by advertiser"></td>
+                    </tr>
+                    <tr>
+                        <td id = 'n5' style="padding: 10px 0 10px;display:none">Sponsor:<br>
+                        <input type="text" name="Sponsor" id="Sponsor" style="width:100%"  value="provided by advertiser"></td>
+                    </tr>
+                    <tr>
+                        <td id='i' style="padding: 10px 0 10px">Impression_Tracking_url:(Not required)<br>
+                        <input type="text" name="Impression_Tracking_url" style="width:100%"  value=""></td>
+                    </tr>
+                    <!--flash html-->
+                    <tr>
+                        <td id = 'n6' style="padding: 10px 0 10px; display:none "  >Click Tracking Parameter:<br>
+                        <input type="text" name="Click_Tracking_Parameter" id="Click_Tracking_Parameter" style="width:100%"  value="provided by advertiser"></td>
+                    </tr>
                     <tr>
                         <td colspan="2" style="padding: 10px 0 10px">
                             <input type="hidden" value="{{cn}}">
-                            <input type="button" value="Add Rule" onclick="combine_checkboxes_adgroup()">
+                            <input type="submit" name="add_rule" value="Add Rule" onclick="combine_checkboxes_adgroup()">
                         </td>
                     </tr>
                 </table>
@@ -195,7 +363,7 @@
                 </tr>
             </table>
             -->
-            <iframe style="border:0px; width:100%; height:260px" id="submitted" name="submitted" >
+            <iframe style="border:0px; width:100%; height:460px" id="submitted" name="submitted" >
             </iframe>
       </div>
     </div>
