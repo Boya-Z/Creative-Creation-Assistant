@@ -21,13 +21,13 @@ class Creative():
         "Creative_width": {
             "desc": "Creative Width, i.e. 300",
             "key": "##w##",
-            "value": "*depend on uploaded creative files",
+            "value": "*depend on uploaded creative files, not for H5",
             "dynamic": True
         },
         "Creative_height": {
             "desc": "Creative Height, i.e. 250",
             "key": "##h##",
-            "value": "*depend on uploaded creative files",
+            "value": "*depend on uploaded creative files, not for H5",
             "dynamic": True
         },
         "TTD AdgroupID": {

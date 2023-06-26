@@ -98,8 +98,25 @@ class Result():
                             landing_page_url = landing_page_url.replace("{}".format(macro_dict["key"]),
                                                                         macro_dict["value"])
                             Description = Description.replace("{}".format(macro_dict["key"]), macro_dict["value"])
-                            Asset_File_Name = Asset_File_Name.replace("{}".format(macro_dict["key"]),
-                                                                      macro_dict["value"])
+                            Asset_File_Name = Asset_File_Name.replace("{}".format(macro_dict["key"]),macro_dict["value"])
+                            # hosted native
+                            Native_Short_Title = Native_Short_Title.replace("{}".format(macro_dict["key"]),
+                                                                        macro_dict["value"])
+                            Native_Long_Title = Native_Long_Title.replace("{}".format(macro_dict["key"]),
+                                                                        macro_dict["value"])
+                            Native_Short_Description = Native_Short_Description.replace("{}".format(macro_dict["key"]),
+                                                                        macro_dict["value"])
+                            Native_Long_Description = Native_Long_Description.replace("{}".format(macro_dict["key"]),
+                                                                        macro_dict["value"])
+                            Sponsor = Sponsor.replace("{}".format(macro_dict["key"]),macro_dict["value"])
+                            # extra for display+video
+                            Impression_Tracking_url = Impression_Tracking_url.replace("{}".format(macro_dict["key"]),
+                                                                        macro_dict["value"])
+                            # 3 rd Video Audio
+                            VAST_XML_URL = VAST_XML_URL.replace("{}".format(macro_dict["key"]),macro_dict["value"])
+                            # hosted flash+html5
+                            Click_Tracking_Parameter = Click_Tracking_Parameter.replace("{}".format(macro_dict["key"]),
+                                                                        macro_dict["value"])
                         else:  # 动态宏替换处理
                             if macro_obj == "Creative_size":
                                 # 读创意文件的size, 存如 size
@@ -110,16 +127,16 @@ class Result():
                                 kind = filetype.guess(path)
                                 if kind.mime.split('/')[0] == 'image':
                                     im = Image.open(path)
-                                    print("{}\\{}".format(creative_path, creative))
-                                    print(creative)
+                                    # print("{}\\{}".format(creative_path, creative))
+                                    # print(creative)
                                     size = "{}x{}".format(im.size[0], im.size[1])
                                     # size = '160x40'  # example
                                 # video
-                                import cv2
-                                if kind.mime.split('/')[0] == 'video':
+                                elif kind.mime.split('/')[0] == 'video':
+                                    import cv2
                                     vid = cv2.VideoCapture(path)
-                                    h = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
-                                    w = vid.get(cv2.CAP_PROP_FRAME_WIDTH)
+                                    h = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
+                                    w = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
                                     size = "{}x{}".format(h, w)
                                 # other file type
                                 else:
@@ -129,6 +146,18 @@ class Result():
                                 landing_page_url = landing_page_url.replace("{}".format(macro_dict["key"]), size)
                                 Description = Description.replace("{}".format(macro_dict["key"]), size)
                                 Asset_File_Name = Asset_File_Name.replace("{}".format(macro_dict["key"]), size)
+                                # hosted native
+                                Native_Short_Title = Native_Short_Title.replace("{}".format(macro_dict["key"]), size)
+                                Native_Long_Title = Native_Long_Title.replace("{}".format(macro_dict["key"]), size)
+                                Native_Short_Description =Native_Short_Description.replace("{}".format(macro_dict["key"]), size)
+                                Native_Long_Description = Native_Long_Description.replace("{}".format(macro_dict["key"]), size)
+                                Sponsor = Sponsor.replace("{}".format(macro_dict["key"]), size)
+                                # extra for display+video
+                                Impression_Tracking_url = Impression_Tracking_url.replace("{}".format(macro_dict["key"]), size)
+                                # 3 rd Video Audio
+                                VAST_XML_URL = VAST_XML_URL.replace("{}".format(macro_dict["key"]), size)
+                                # hosted flash+html5
+                                Click_Tracking_Parameter = Click_Tracking_Parameter.replace("{}".format(macro_dict["key"]), size)
                             if macro_obj == "Creative_width":
                                 # read width
                                 # image
@@ -138,15 +167,13 @@ class Result():
                                 kind = filetype.guess(path)
                                 if kind.mime.split('/')[0] == 'image':
                                     im = Image.open(path)
-                                    print("{}\\{}".format(creative_path, creative))
-                                    print(creative)
                                     width = "{}".format(im.size[0])
                                     # size = '160x40' width='160' # example
                                 # video
-                                import cv2
-                                if kind.mime.split('/')[0] == 'video':
+                                elif kind.mime.split('/')[0] == 'video':
+                                    import cv2
                                     vid = cv2.VideoCapture(path)
-                                    width = vid.get(cv2.CAP_PROP_FRAME_WIDTH)
+                                    width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
                                     width = "{}".format(width)
 
                                 # other file type
@@ -168,15 +195,13 @@ class Result():
                                 kind = filetype.guess(path)
                                 if kind.mime.split('/')[0] == 'image':
                                     im = Image.open(path)
-                                    print("{}\\{}".format(creative_path, creative))
-                                    print(creative)
                                     height = "{}".format(im.size[1])
                                     # size = '160x40' width='40' # example
                                 # video
-                                import cv2
-                                if kind.mime.split('/')[0] == 'video':
+                                elif kind.mime.split('/')[0] == 'video':
+                                    import cv2
                                     vid = cv2.VideoCapture(path)
-                                    height = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
+                                    height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
                                     height = "{}".format(height)
 
                                 # other file type
@@ -199,6 +224,22 @@ class Result():
                                 Description = Description.replace("{}".format(macro_dict["key"]), Asset_File_Name)
                                 Asset_File_Name = Asset_File_Name.replace("{}".format(macro_dict["key"]),
                                                                           Asset_File_Name)
+                                # hosted native
+                                Native_Short_Title = Native_Short_Title.replace("{}".format(macro_dict["key"]), Asset_File_Name)
+                                Native_Long_Title = Native_Long_Title.replace("{}".format(macro_dict["key"]), Asset_File_Name)
+                                Native_Short_Description = Native_Short_Description.replace(
+                                    "{}".format(macro_dict["key"]), Asset_File_Name)
+                                Native_Long_Description = Native_Long_Description.replace(
+                                    "{}".format(macro_dict["key"]), Asset_File_Name)
+                                Sponsor = Sponsor.replace("{}".format(macro_dict["key"]), Asset_File_Name)
+                                # extra for display+video
+                                Impression_Tracking_url = Impression_Tracking_url.replace(
+                                    "{}".format(macro_dict["key"]), Asset_File_Name)
+                                # 3 rd Video Audio
+                                VAST_XML_URL = VAST_XML_URL.replace("{}".format(macro_dict["key"]), Asset_File_Name)
+                                # hosted flash+html5
+                                Click_Tracking_Parameter = Click_Tracking_Parameter.replace(
+                                    "{}".format(macro_dict["key"]), Asset_File_Name)
                             # if macro_obj == "Adgroup":
                             #     AdgroupList = request.POST.get('Adgroup_list')
                             #     # AdgroupList = []
@@ -268,6 +309,24 @@ class Result():
                                 Description = Description.replace("{}".format(macro_dict["key"]), macro_dict["value"])
                                 Asset_File_Name = Asset_File_Name.replace("{}".format(macro_dict["key"]),
                                                                           macro_dict["value"])
+                                # hosted native
+                                Native_Short_Title = Native_Short_Title.replace("{}".format(macro_dict["key"]),
+                                                                                macro_dict["value"])
+                                Native_Long_Title = Native_Long_Title.replace("{}".format(macro_dict["key"]),
+                                                                              macro_dict["value"])
+                                Native_Short_Description = Native_Short_Description.replace(
+                                    "{}".format(macro_dict["key"]),macro_dict["value"])
+                                Native_Long_Description = Native_Long_Description.replace(
+                                    "{}".format(macro_dict["key"]),macro_dict["value"])
+                                Sponsor = Sponsor.replace("{}".format(macro_dict["key"]), macro_dict["value"])
+                                # extra for display+video
+                                Impression_Tracking_url = Impression_Tracking_url.replace(
+                                    "{}".format(macro_dict["key"]),macro_dict["value"])
+                                # 3 rd Video Audio
+                                VAST_XML_URL = VAST_XML_URL.replace("{}".format(macro_dict["key"]), macro_dict["value"])
+                                # hosted flash+html5
+                                Click_Tracking_Parameter = Click_Tracking_Parameter.replace(
+                                    "{}".format(macro_dict["key"]),macro_dict["value"])
                             else:  # 动态宏替换处理
                                 if macro_obj == "Creative_size":
                                     # 读创意文件的size, 存如 size
@@ -278,16 +337,17 @@ class Result():
                                     kind = filetype.guess(path)
                                     if kind.mime.split('/')[0] == 'image':
                                         im = Image.open(path)
-                                        print("{}\\{}".format(creative_path, creative))
-                                        print(creative)
+                                        # print("{}\\{}".format(creative_path, creative))
+                                        # print(creative)
                                         size = "{}x{}".format(im.size[0], im.size[1])
                                         # size = '160x40'  # example
                                     # video
-                                    import cv2
-                                    if kind.mime.split('/')[0] == 'video':
+                                    elif kind.mime.split('/')[0] == 'video':
+                                        import cv2
                                         vid = cv2.VideoCapture(path)
-                                        height = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
-                                        width = vid.get(cv2.CAP_PROP_FRAME_WIDTH)
+                                        height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
+                                        width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
+                                        # print(type(vid.get(cv2.CAP_PROP_FRAME_WIDTH)))
                                         size = "{}x{}".format(height, width)
                                     # other file type
                                     else:
@@ -297,6 +357,23 @@ class Result():
                                     landing_page_url = landing_page_url.replace("{}".format(macro_dict["key"]), size)
                                     Description = Description.replace("{}".format(macro_dict["key"]), size)
                                     Asset_File_Name = Asset_File_Name.replace("{}".format(macro_dict["key"]), size)
+                                    # hosted native
+                                    Native_Short_Title = Native_Short_Title.replace("{}".format(macro_dict["key"]),
+                                                                                    size)
+                                    Native_Long_Title = Native_Long_Title.replace("{}".format(macro_dict["key"]), size)
+                                    Native_Short_Description = Native_Short_Description.replace(
+                                        "{}".format(macro_dict["key"]), size)
+                                    Native_Long_Description = Native_Long_Description.replace(
+                                        "{}".format(macro_dict["key"]), size)
+                                    Sponsor = Sponsor.replace("{}".format(macro_dict["key"]), size)
+                                    # extra for display+video
+                                    Impression_Tracking_url = Impression_Tracking_url.replace(
+                                        "{}".format(macro_dict["key"]), size)
+                                    # 3 rd Video Audio
+                                    VAST_XML_URL = VAST_XML_URL.replace("{}".format(macro_dict["key"]), size)
+                                    # hosted flash+html5
+                                    Click_Tracking_Parameter = Click_Tracking_Parameter.replace(
+                                        "{}".format(macro_dict["key"]), size)
                                 if macro_obj == "Creative_width":
                                     # read width
                                     # image
@@ -311,11 +388,12 @@ class Result():
                                         width = "{}".format(im.size[0])
                                         # size = '160x40' width='160' # example
                                     # video
-                                    import cv2
-                                    if kind.mime.split('/')[0] == 'video':
+                                    elif kind.mime.split('/')[0] == 'video':
+                                        import cv2
                                         vid = cv2.VideoCapture(path)
-                                        width = vid.get(cv2.CAP_PROP_FRAME_WIDTH)
+                                        width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
                                         width = "{}".format(width)
+                                        #width = str(width)
 
                                     # other file type
                                     else:
@@ -336,15 +414,15 @@ class Result():
                                     kind = filetype.guess(path)
                                     if kind.mime.split('/')[0] == 'image':
                                         im = Image.open(path)
-                                        print("{}\\{}".format(creative_path, creative))
-                                        print(creative)
+                                        print(type(im.size[1]))
+                                        print(im.size[1])
                                         height = "{}".format(im.size[1])
                                         # size = '160x40' width='40' # example
                                     # video
-                                    import cv2
-                                    if kind.mime.split('/')[0] == 'video':
+                                    elif kind.mime.split('/')[0] == 'video':
+                                        import cv2
                                         vid = cv2.VideoCapture(path)
-                                        height = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
+                                        height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
                                         height = "{}".format(height)
 
                                     # other file type
@@ -367,6 +445,24 @@ class Result():
                                     Description = Description.replace("{}".format(macro_dict["key"]), Asset_File_Name)
                                     Asset_File_Name = Asset_File_Name.replace("{}".format(macro_dict["key"]),
                                                                               Asset_File_Name)
+                                    # hosted native
+                                    Native_Short_Title = Native_Short_Title.replace("{}".format(macro_dict["key"]),
+                                                                                    Asset_File_Name)
+                                    Native_Long_Title = Native_Long_Title.replace("{}".format(macro_dict["key"]),
+                                                                                  Asset_File_Name)
+                                    Native_Short_Description = Native_Short_Description.replace(
+                                        "{}".format(macro_dict["key"]), Asset_File_Name)
+                                    Native_Long_Description = Native_Long_Description.replace(
+                                        "{}".format(macro_dict["key"]), Asset_File_Name)
+                                    Sponsor = Sponsor.replace("{}".format(macro_dict["key"]), Asset_File_Name)
+                                    # extra for display+video
+                                    Impression_Tracking_url = Impression_Tracking_url.replace(
+                                        "{}".format(macro_dict["key"]), Asset_File_Name)
+                                    # 3 rd Video Audio
+                                    VAST_XML_URL = VAST_XML_URL.replace("{}".format(macro_dict["key"]), Asset_File_Name)
+                                    # hosted flash+html5
+                                    Click_Tracking_Parameter = Click_Tracking_Parameter.replace(
+                                        "{}".format(macro_dict["key"]), Asset_File_Name)
                                 if macro_obj == "Adgroup":
                                     # AdgroupList = []
                                     name = name.replace("{}".format(macro_dict["key"]), adgroup)
@@ -374,6 +470,24 @@ class Result():
                                     landing_page_url = landing_page_url.replace("{}".format(macro_dict["key"]), adgroup)
                                     Description = Description.replace("{}".format(macro_dict["key"]), adgroup)
                                     Asset_File_Name = Asset_File_Name.replace("{}".format(macro_dict["key"]), adgroup)
+                                    # hosted native
+                                    Native_Short_Title = Native_Short_Title.replace("{}".format(macro_dict["key"]),
+                                                                                    adgroup)
+                                    Native_Long_Title = Native_Long_Title.replace("{}".format(macro_dict["key"]),
+                                                                                  adgroup)
+                                    Native_Short_Description = Native_Short_Description.replace(
+                                        "{}".format(macro_dict["key"]), adgroup)
+                                    Native_Long_Description = Native_Long_Description.replace(
+                                        "{}".format(macro_dict["key"]), adgroup)
+                                    Sponsor = Sponsor.replace("{}".format(macro_dict["key"]), adgroup)
+                                    # extra for display+video
+                                    Impression_Tracking_url = Impression_Tracking_url.replace(
+                                        "{}".format(macro_dict["key"]), adgroup)
+                                    # 3 rd Video Audio
+                                    VAST_XML_URL = VAST_XML_URL.replace("{}".format(macro_dict["key"]), adgroup)
+                                    # hosted flash+html5
+                                    Click_Tracking_Parameter = Click_Tracking_Parameter.replace(
+                                        "{}".format(macro_dict["key"]), adgroup)
                         Asset_File_Name = "{}{}".format(Asset_File_Name, creative_file_ext)
                         if Asset_File_Name != creative_file_name:
                             shutil.copy(os.path.join(creative_path, creative),
