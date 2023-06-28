@@ -278,9 +278,9 @@ def add_rules():
     #     return render_template('submitted.html', creative_rules=rules_list)
 
     # creative_type=['Hosted Display','Hosted Native','Hosted Video','Hosted Audio']
-    types = request.form.get('creative_type')
-    print(str(types))
-    print(request.form.get('files').split(","))
+    # types = request.form.get('creative_type')
+    # print(str(types))
+    # print(request.form.get('files').split(","))
     if request.form['add_rule'] == 'Change Type':
     # if "not submit form" in request.form:
         pass
@@ -308,7 +308,7 @@ def add_rules():
                 "Adgroup_name": request.form.get('Ag_list').split(",")
             }
         )
-    print(rules_list)
+    # print(rules_list)
     with open("{}rules.tmp".format(session['upload_path']), "w") as fo:
         json.dump(rules_list, fo)
     return render_template('submitted.html', creative_rules=rules_list)
