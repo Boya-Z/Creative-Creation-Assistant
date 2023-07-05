@@ -41,6 +41,7 @@
                 document.getElementById('n6').style.display = 'none';
                 document.getElementById('n7').style.display = 'none';
                 document.getElementById('n8').style.display = 'none';
+                document.getElementById('n9').style.display = 'none';
                 document.getElementById('n10').style.display = 'none';
                 return;
             }
@@ -104,21 +105,27 @@
                 document.getElementById('i').style.display = 'initial';
                 document.getElementById('n7').style.display = 'none';
                 document.getElementById('n8').style.display = 'none';
+                document.getElementById('n9').style.display = 'none';
+                document.getElementById('n10').style.display = 'none';
                 return;
             }
             if (type.value == "Hosted Video"){
                 document.getElementById('i').style.display = 'initial';
                 document.getElementById('n7').style.display = 'none';
                 document.getElementById('n8').style.display = 'none';
+                document.getElementById('n9').style.display = 'none';
+                document.getElementById('n10').style.display = 'none';
                 return;
             }
             if (type.value == "Hosted Audio"){
                 document.getElementById('i').style.display = 'initial';
                 document.getElementById('n7').style.display = 'none';
                 document.getElementById('n8').style.display = 'none';
+                document.getElementById('n9').style.display = 'none';
+                document.getElementById('n10').style.display = 'none';
                 return;
             }
-            ;
+
 
 
         }
@@ -200,7 +207,7 @@
         </ul>
     </div>
     <div class="main_content">
-        <div class="header">Welcome to Tracking Creation Assistant.</div>
+        <div class="header">Welcome to Creative Bulk Import Assistant.</div>
         <div class="info">
             <div style="position:absolute; left:53%">
             <p>Macro Dictionary:</p>
@@ -235,8 +242,10 @@
             <form method="post" id="rule_setting_form" action="/add_rules" target="submitted">
                 <p>Choose Creative Files:</p>
 
-                <table style="width:40%">
+                <table class="content-table" style="width:40%">
+                    <thead>
                     <tr><td></td><td>file_name</td><td>size</td><td>extension</td><td>mime</td></tr>
+                    <tbody>
                     {% for f in file_list %}
                     <tr>
                         <td><input type="checkbox" name="creative_files[]" id="creative_files" value="{{f[0]}}" checked ='checked'></td>
