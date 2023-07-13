@@ -231,7 +231,7 @@
             </table><br>
 <!--                <form method="post" id="add_Adgroup" action="/add_Adgroup" >-->
                     <p>Add value to Adgroup Macro(##ag##):</p>
-                    <input id="myInput" type="text" value="">
+                    <input id="myInput" type="text" style="width:60%" value="">
                     <button id="myBtn" onclick="AddAdgroup()">Add</button>
 <!--                    <input id="delInput" type="text" value="">-->
                     <button id="myDel" onclick="DeleteAdgroup()">Delete the last Adgroup</button>
@@ -278,12 +278,12 @@
 <!--                            <span class="tooltip-text">For column Name in template sheet</span>-->
                             </span>
                             </span>
-                            <br><input type="text" name="creative_name_rule" style="width:180px" value="##cpn##_##cfn##"></td>
+                            <br><input type="text" name="creative_name_rule" style="width:100%" value="##cpn##_##cfn##"></td>
 
                     </tr>
                     <tr>
-                        <td style="padding: 10px 0 10px">Description:<br>
-                        <input type="text" name="Description_rule" style="width:50%" value="##cpn## ##ag##"></td>
+                        <td style="padding: 10px 0 10px">Description(not Required):<br>
+                        <input type="text" name="Description_rule" style="width:100%" value="##cpn## ##ag##"></td>
                     </tr>
                     <!--html5 3rd display-->
                     <tr id = 'n7'  style="display:none">
@@ -305,7 +305,7 @@
                     </tr>
                     <tr>
                         <td  id='a' style="padding: 10px 0 10px">Asset File Name(if you don't change, the same as file name):<br>
-                        <input type="text" name="Asset_File_Name_rule" style="width:50%" value="##cfn##"></td>
+                        <input type="text" name="Asset_File_Name_rule" style="width:100%" value="##cfn##"></td>
                     </tr>
                     <tr>
                         <td id='c' style="padding: 10px 0 10px">Clickthrough_url:<br>
@@ -316,20 +316,20 @@
                         <input type="text" name="landing_page_rule" style="width:100%"  value=""></td>
                     </tr>
                     <!--native-->
-                    <tr id = 'n1'  style="display:none">
-                        <td style="padding: 10px 0 10px">Native_Short_Title:<br>
+                    <tr>
+                        <td id = 'n1'  style="padding: 10px 0 10px;display:none">Native_Short_Title:<br>
                         <input type="text" name="Native_Short_Title" id="Native_Short_Title" style="width:100%"  value=""></td>
                     </tr>
-                    <tr id = 'n2'  style="display:none">
-                        <td style="padding: 10px 0 10px">Native_Long_Title:<br>
+                    <tr>
+                        <td id = 'n2'  style="padding: 10px 0 10px;display:none">Native_Long_Title:<br>
                         <input type="text" name="Native_Long_Title" id="Native_Long_Title" style="width:100%"  value=""></td>
                     </tr>
-                    <tr id = 'n3'  style="display:none">
-                        <td style="padding: 10px 0 10px">Native_Short_Description:<br>
+                    <tr>
+                        <td id = 'n3'  style="padding: 10px 0 10px;display:none">Native_Short_Description:<br>
                         <input type="text" name="Native_Short_Description" id="Native_Short_Description" style="width:100%"  value=""></td>
                     </tr>
-                    <tr  id = 'n4'  style="display:none">
-                        <td style="padding: 10px 0 10px">Native_Long_Description:<br>
+                    <tr>
+                        <td id = 'n4'  style="padding: 10px 0 10px;display:none">Native_Long_Description:<br>
                         <input type="text" name="Native_Long_Description" id ="Native_Long_Description" style="width:100%"  value=""></td>
                     </tr>
                     <tr>
@@ -374,7 +374,7 @@
                 </tr>
             </table>
             -->
-            <iframe style="border:0px; width:100%; height:460px" id="submitted" name="submitted" >
+            <iframe style="border:0px; width:100%; height:460px"  marginwidth="0"  id="submitted" name="submitted" >
             </iframe>
       </div>
     </div>

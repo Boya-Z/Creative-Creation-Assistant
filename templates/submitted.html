@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="static/styles.css">
     <script src="https://js.adsrvr.org/up_loader.1.1.0.js" type="text/javascript"></script>
     <script src="{{ url_for('static', filename='ttd_universal_pixel.js') }}"></script>
+    <script src="https://kit.fontawesome.com/b1400893a8.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <!--<div class="wrapper">-->
@@ -16,6 +17,7 @@
                 <thead>
                 <tr>
 <!--                    <td align="center">name_rule</td>-->
+                    <td>Selected files</td>
                     <td>name_rule</td>
                     <td>Description_rule</td>
                     <td>Asset_File_Name_rule</td>
@@ -26,6 +28,9 @@
                 {% for rule in creative_rules %}
                     {% if rule["creative_type"] == 'Hosted Display'%}
                         <tr>
+                            <td style="white-space:pre-line; word-wrap:break-word">
+                                {% for f in rule["creative_files"] %}
+                                <i class="fa-solid fa-square-check"></i>{{f}}<br>{% endfor %}</td>
                             <td>{{rule["name"]}}</td>
                             <td>{{rule["Description"]}}</td>
                             <td>{{rule["Asset_File_Name"]}}</td>
@@ -39,6 +44,7 @@
             <table style="width:100%" name='table2' class="content-table1" >
                 <thead>
                 <tr>
+                    <td>Selected files</td>
                     <td>name_rule</td>
                     <td>Description_rule</td>
                     <td>Asset_File_Name_rule</td>
@@ -55,6 +61,9 @@
                 {% for rule in creative_rules%}
                     {% if rule["creative_type"] == 'Hosted Native'%}
                         <tr>
+                            <td style="white-space:pre-line; word-wrap:break-word">
+                                {% for f in rule["creative_files"] %}
+                                <i class="fa-solid fa-square-check"></i>{{f}}<br>{% endfor %}</td>
                             <td>{{rule["name"]}}</td>
                             <td>{{rule["Description"]}}</td>
                             <td>{{rule["Asset_File_Name"]}}</td>
@@ -74,6 +83,7 @@
             <table style="width:100%" name='table3' class="content-table1" >
                 <thead>
                 <tr>
+                    <td>Selected files</td>
                     <td>name_rule</td>
                     <td>Description_rule</td>
                     <td>Asset_File_Name_rule</td>
@@ -84,6 +94,9 @@
                 {% for rule in creative_rules%}
                     {% if rule["creative_type"] == 'Hosted Video'%}
                         <tr>
+                            <td style="white-space:pre-line; word-wrap:break-word">
+                                {% for f in rule["creative_files"] %}
+                                <i class="fa-solid fa-square-check"></i>{{f}}<br>{% endfor %}</td>
                             <td>{{rule["name"]}}</td>
                             <td>{{rule["Description"]}}</td>
                             <td>{{rule["Asset_File_Name"]}}</td>
@@ -97,6 +110,7 @@
             <table style="width:100%" name='table4' class="content-table1" >
                 <thead>
                 <tr>
+                    <td>Selected files</td>
                     <td>name_rule</td>
                     <td>Description_rule</td>
                     <td>Asset_File_Name_rule</td>
@@ -107,6 +121,9 @@
                 {% for rule in creative_rules%}
                     {% if rule["creative_type"] == 'Hosted Audio'%}
                         <tr>
+                            <td style="white-space:pre-line; word-wrap:break-word">
+                                {% for f in rule["creative_files"] %}
+                                <i class="fa-solid fa-square-check"></i>{{f}}<br>{% endfor %}</td>
                             <td>{{rule["name"]}}</td>
                             <td>{{rule["Description"]}}</td>
                             <td>{{rule["Asset_File_Name"]}}</td>
@@ -120,6 +137,7 @@
             <table style="width:100%" name='table4' class="content-table1" >
                 <thead>
                 <tr>
+                    <td>Selected files</td>
                     <td>name_rule</td>
                     <td>Description_rule</td>
                     <td>Asset_File_Name_rule</td>
@@ -131,6 +149,9 @@
                 {% for rule in creative_rules%}
                     {% if rule["creative_type"] == 'Hosted Flash'%}
                         <tr>
+                            <td style="white-space:pre-line; word-wrap:break-word">
+                                {% for f in rule["creative_files"] %}
+                                <i class="fa-solid fa-square-check"></i>{{f}}<br>{% endfor %}</td>
                             <td>{{rule["name"]}}</td>
                             <td>{{rule["Description"]}}</td>
                             <td>{{rule["Asset_File_Name"]}}</td>
@@ -145,6 +166,7 @@
             <table style="width:100%" name='table4' class="content-table1" >
                 <thead>
                 <tr>
+                    <td>Selected files</td>
                     <td>name_rule</td>
                     <td>Description_rule</td>
                     <td>Width_rule</td>
@@ -158,6 +180,9 @@
                 {% for rule in creative_rules%}
                     {% if rule["creative_type"] == 'Hosted HTML5'%}
                         <tr>
+                            <td style="white-space:pre-line; word-wrap:break-word">
+                                {% for f in rule["creative_files"] %}
+                                <i class="fa-solid fa-square-check"></i>{{f}}<br>{% endfor %}</td>
                             <td>{{rule["name"]}}</td>
                             <td>{{rule["Description"]}}</td>
                             <td>{{rule["Width"]}}</td>
@@ -174,6 +199,7 @@
             <table style="width:100%" name='table4' class="content-table1" >
                 <thead>
                 <tr>
+                    <td>Selected files</td>
                     <td>name_rule</td>
                     <td>Description_rule</td>
                     <td>Width_rule</td>
@@ -185,6 +211,9 @@
                 {% for rule in creative_rules%}
                     {% if rule["creative_type"] == 'Third Party Display'%}
                         <tr>
+                            <td style="white-space:pre-line; word-wrap:break-word">
+                                {% for f in rule["creative_files"] %}
+                                <i class="fa-solid fa-square-check"></i>{{f}}<br>{% endfor %}</td>
                             <td>{{rule["name"]}}</td>
                             <td>{{rule["Description"]}}</td>
                             <td>{{rule["Width"]}}</td>
@@ -199,6 +228,7 @@
             <table style="width:100%" name='table4' class="content-table1" >
                 <thead>
                 <tr>
+                    <td>Selected files</td>
                     <td>name_rule</td>
                     <td>Description_rule</td>
                     <td>VAST_XML_rule</td>
@@ -208,6 +238,9 @@
                 {% for rule in creative_rules%}
                     {% if rule["creative_type"] == 'Third Party Video'%}
                         <tr>
+                            <td style="white-space:pre-line; word-wrap:break-word">
+                                {% for f in rule["creative_files"] %}
+                                <i class="fa-solid fa-square-check"></i>{{f}}<br>{% endfor %}</td>
                             <td>{{rule["name"]}}</td>
                             <td>{{rule["Description"]}}</td>
                             <td>{{rule["VAST_XML_URL"]}}</td>
@@ -220,6 +253,7 @@
             <table style="width:100%" name='table4' class="content-table1" >
                 <thead>
                 <tr>
+                    <td>Selected files</td>
                     <td>name_rule</td>
                     <td>Description_rule</td>
                     <td>VAST_XML_rule</td>
@@ -229,6 +263,9 @@
                 {% for rule in creative_rules%}
                     {% if rule["creative_type"] == 'Third Party Audio'%}
                         <tr>
+                            <td style="white-space:pre-line; word-wrap:break-word">
+                                {% for f in rule["creative_files"] %}
+                                <i class="fa-solid fa-square-check"></i>{{f}}<br>{% endfor %}</td>
                             <td>{{rule["name"]}}</td>
                             <td>{{rule["Description"]}}</td>
                             <td>{{rule["VAST_XML_URL"]}}</td>
