@@ -384,7 +384,7 @@ def exportXlsx():
                                creative_path=session['upload_path'], export_path=session['export_path'])
     result_file_name = resultObj.export_to_excel(
         path=session['export_path'],
-        name="{}_BulkCreativeImport_Result_v28.xlsx".format(session['campaignName'])
+        name="{}_BulkCreativeImport_Result_v30.xlsx".format(session['campaignName'])
     )
     file_path = os.path.join(session['export_path'], result_file_name)
     return flask.send_file(file_path)
